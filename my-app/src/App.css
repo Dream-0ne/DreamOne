@@ -1,4 +1,5 @@
 body {
   /* background-color: #C0988D; */
-  background-image: url("./background.png") ;
+  background-image: url("./front-page.jpg") ;
+  background-position: bottom;
 }
