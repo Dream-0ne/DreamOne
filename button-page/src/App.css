@@ -1,42 +1,35 @@
 @import '~antd/dist/antd.css';
-.App {
-  text-align: center;
-}
+
 
 body{
   background-image: url("background.png");
-  object-fit: cover;
+ 
 }
 
 .navbar {
   overflow: hidden;
   background-color: #C0988D;
   position: fixed;
-  top: 0;
   width: 100%;
 }
 
-.instruction{
+.secondHeader{
   overflow: hidden;
   background-color: #FCE9DB;
   position: fixed;
-  top: 10%;
-  height: 10%;
   
   width: 100%;
 }
 
 .instruction-words{
-  padding-top: 1%;
+  
   color:#96756C;
   text-align: center;
 
 }
 
 .dropButton{
-  display: flex;  
-  justify-content: center;  
-  align-items: center;  
+  width: 100%;
 }
 .bannerLogo{
   width:100%;
@@ -44,5 +37,14 @@ body{
   object-fit: contain;
   
 }
+
+.instruction{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
 
 
