@@ -1,7 +1,13 @@
 body {
   /* background-color: #C0988D; */
-  background-image: url("./front-page.jpg") ;
+  background-color: #C0988D;
+  height: 100%;    
   
-  background-position-y: -50px;
-  background-position-x: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+
+  
+
 }
