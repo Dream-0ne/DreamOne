@@ -1,0 +1,48 @@
+@import '~antd/dist/antd.css';
+.App {
+  text-align: center;
+}
+
+body{
+  background-image: url("background.png");
+  object-fit: cover;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #C0988D;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.instruction{
+  overflow: hidden;
+  background-color: #FCE9DB;
+  position: fixed;
+  top: 10%;
+  height: 10%;
+  
+  width: 100%;
+}
+
+.instruction-words{
+  padding-top: 1%;
+  color:#96756C;
+  text-align: center;
+
+}
+
+.dropButton{
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+}
+.bannerLogo{
+  width:100%;
+  height: 90px;
+  object-fit: contain;
+  
+}
+
+
