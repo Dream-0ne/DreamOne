@@ -5,7 +5,7 @@ def createOccasions():
   cnx = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="Meerxn3342!",
+    passwd="addlocalpasswordhere",
   )
   occasions = ["Birthday","Nightout","Party","Date","Exploring"]
   results = ""
