@@ -14,6 +14,20 @@ class Filters(db.Model):
     name = db.Column(db.String(100))
     tag = db.Column(db.String(100))
 
+class Buisness_tags(db.Model):
+    id = db.Column(db.Intger)
+    tag = db.Column(db.String(100))
+
+class Buisness_filters(db.Model):
+    id = db.Column(db.Intger)
+    filter = db.Column(db.String(100))
+
+class Buisness(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    phone_number = db.Column(db.String(20))
+    address = db.Column(db.Text)
+    
 
 @app.route('/')
 def hello():
