@@ -5,22 +5,23 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
 
-
+STRING_LENGTH = 100
+PHONE_NUMBER_LENGTH = 15
 class Occassion(db.Model):
-    name = db.Column(db.String(100))
-    filter = db.Column(db.String(100))
+    name = db.Column(db.String(STRING_LENGTH))
+    filter = db.Column(db.String(STRING_LENGTH))
 
 class Filters(db.Model):
-    name = db.Column(db.String(100))
-    tag = db.Column(db.String(100))
+    name = db.Column(db.String(STRING_LENGTH))
+    tag = db.Column(db.String(STRING_LENGTH))
 
 class Buisness_tags(db.Model):
     id = db.Column(db.Intger)
-    tag = db.Column(db.String(100))
+    tag = db.Column(db.String(STRING_LENGTH))
 
 class Buisness_filters(db.Model):
     id = db.Column(db.Intger)
-    filter = db.Column(db.String(100))
+    filter = db.Column(db.String(STRING_LENGTH))
 
 class Buisness(db.Model):
     id = db.Column(db.Integer, primary_key=True)
