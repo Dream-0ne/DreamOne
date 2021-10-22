@@ -22,37 +22,23 @@ const menu = (
 
 const { Header, Footer, Sider, Content } = Layout;
 function Occasions() {
-  return (
-    <>
+  return ( 
+    <Layout>
+        <Header class = "navbar">
+          <img src = {logo} class = "bannerLogo"/>
+          <Header class = "secondHeader">
+            <div style= {{backgroundColor : "#FCE9DB"}}>
+              <h1 class = "instruction-words">
+                    Occasion  
+              </h1>
+            </div>
+          </Header>
+      </Header>
 
-      <Layout>
-      <Header class = "navbar">
-       <img src = {logo} class = "bannerLogo"/>
-       <Header class = "secondHeader">
-      <div style= {{backgroundColor : "#FCE9DB"}}>
-          <h1 class = "instruction-words">
-                Occasion  
-          </h1>
-        </div>
-        
-      </Header>
-      </Header>
-     </Layout>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      
      
-      <div class = "instruction">
+     {/* <Content> */}
+       Hello world
+      {/* <div class = "instruction">
       <h1 >
         Please choose any one occasion to start your plan:
       </h1>
@@ -66,23 +52,11 @@ function Occasions() {
             <h3 style = {{color: "#FFF0F0"}}>Choose an Occasion <DownOutlined /></h3>
           </Button>
         </Dropdown>
-      </div>
+      </div> */}
+      {/* </Content> */}
+    </Layout>
 
     
-       
-     
-    
-     
-     
-    
-
-    
-      
-
-   
-      
-      
-    </>
   );
 }
 

@@ -1,11 +1,15 @@
 @import '~antd/dist/antd.css';
 
 
-body{
+.pageContainer{
   background-image: url("background.png");
+  margin-left: 16px;
+  margin-right: 16px;
  
 }
-
+.layoutStyle{
+  margin-bottom: 16px;
+}
 .navbar {
   overflow: hidden;
   background-color: #C0988D;
