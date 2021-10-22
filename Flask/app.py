@@ -1,6 +1,6 @@
 from flask import Flask
+from mySqlDB import createOccasions
 from flask_sqlalchemy import SQLAlchemy
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
@@ -31,4 +31,7 @@ class Buisness(db.Model):
 
 @app.route('/')
 def hello():
-    return 'Hello, World!'
+    occasionlist = createOccasions()
+    return 'Hello, World! the first occasion is ' + str(occasionlist[0][1])
+if __name__ == "__main__":
+    app.run()
