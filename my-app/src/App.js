@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import frontPage from "./front-page.jpg"
+import frontPage from "./frontpage.png"
 
 function App() {
   return (
     <>
-      <img src = {frontPage}/>
+      <img src = {frontPage} />
     </>
   );
 }
