@@ -24,6 +24,10 @@ def occasionList():
 @app.route('/filters', methods=['GET'])
 def filterList():
     filterList = mySqlDB.getFilters("Birthday")
+    @after_this_request 
+    def add_header(response):
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     return json.dumps(filterList)
 
 if __name__ == "__main__":
