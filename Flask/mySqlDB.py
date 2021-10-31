@@ -44,7 +44,7 @@ def createOccasionsFilters():
   connection.commit()
 
 def createFiltersTags():
-   tags = {0:["Chinese,Japenese","Mexican"], 1:["Local Small Market","Clothing Thrift Store"], 2:["Events","Local Festivals"]}
+   tags = {0:["Chinese","Japenese","Mexican"], 1:["Local Small Market","Clothing Thrift Store"], 2:["Events","Local Festivals"]}
    #tags = ['Mexican','Japanese','Chinese']
    cursor.execute(f"CREATE table if not exists filterTags (filterid int({ID_SIZE}), tag varchar({STRING_LENGTH}), PRIMARY KEY(filterid,tag))")
    for k,v in tags.items():
