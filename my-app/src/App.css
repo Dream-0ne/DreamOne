@@ -1,0 +1,20 @@
+body {
+  /* background-color: #C0988D; */
+  background-color: #C99789;
+  height: 100%;   
+  overflow-y: hidden;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+
+  
+
+}
+img {
+  width: auto;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  border-image-repeat: no-repeat;
+}
