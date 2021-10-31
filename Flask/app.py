@@ -13,5 +13,10 @@ def occasionList():
     # print(type(occasionList))
     return json.dumps(occasionlist)
 
+@app.route('/filters', methods=['GET'])
+def filterList():
+    filterList = mySqlDB.getFilters("Birthday")
+    return json.dumps(filterList)
+
 if __name__ == "__main__":
     app.run()

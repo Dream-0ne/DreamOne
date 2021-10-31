@@ -38,7 +38,10 @@ def createOccasions():
   connection.commit()
 
 def createOccasionsFilters():
+  filters = ['Food', 'shopping', 'sightseeing']
   cursor.execute(f"CREATE table if not exists occasionsfilters (id int({ID_SIZE}), occasionid int({ID_SIZE}), filter varchar({STRING_LENGTH}), PRIMARY KEY(id))")
+  for i in range(3):
+    cursor.execute(f"REPLACE INTO occasionsfilters (id, occasionid, filter) VALUES ({i},0,\"{filters[i]}\")")
   connection.commit()
 
 def createFiltersTags():
@@ -55,6 +58,12 @@ def createBuisnessTags():
 
 def getOccasions():
   cursor.execute("SELECT name FROM occasions")
+  results= cursor.fetchall()
+  return results
+
+def getFilters(occasion):
+  query = f"SELECT f.filter from occasionsfilters f, occasions o where o.id=f.occasionid and o.name=\"{occasion}\""
+  cursor.execute(query)
   results= cursor.fetchall()
   return results
 
