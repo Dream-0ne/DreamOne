@@ -13,7 +13,7 @@ def connect():
   connection = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="",
+    passwd="Meerxn3342!",
   )
   cursor = connection.cursor()
 
@@ -37,18 +37,20 @@ def createOccasions():
   connection.commit()
 
 def createOccasionsFilters():
-  # filters = ['Food', 'shopping', 'sightseeing']
+  filters = ['Food', 'shopping', 'sightseeing']
   cursor.execute(f"CREATE table if not exists occasionsfilters (id int({ID_SIZE}), occasionid int({ID_SIZE}), filter varchar({STRING_LENGTH}), PRIMARY KEY(id))")
-  # for i in range(3):
-  #   cursor.execute(f"REPLACE INTO occasionsfilters (id, occasionid, filter) VALUES ({i},0,\"{filters[i]}\")")
+  for i in range(3):
+   cursor.execute(f"REPLACE INTO occasionsfilters (id, occasionid, filter) VALUES ({i},0,\"{filters[i]}\")")
   connection.commit()
 
 def createFiltersTags():
-  # tags = ['Mexican','Japanese','Chinese']
-  cursor.execute(f"CREATE table if not exists filterTags (filterid int({ID_SIZE}), tag varchar({STRING_LENGTH}), PRIMARY KEY(filterid,tag))")
-  # for i in range(3):
-  #   cursor.execute(f"REPLACE INTO filterTags (filterid,tag) VALUES (0,'{tags[i]}')")
-  connection.commit()
+   tags = {0:["Chinese,Japenese","Mexican"], 1:["Local Small Market","Clothing Thrift Store"], 2:["Events","Local Festivals"]}
+   #tags = ['Mexican','Japanese','Chinese']
+   cursor.execute(f"CREATE table if not exists filterTags (filterid int({ID_SIZE}), tag varchar({STRING_LENGTH}), PRIMARY KEY(filterid,tag))")
+   for k,v in tags.items():
+     for value in v:
+      cursor.execute(f"REPLACE INTO filterTags (filterid,tag) VALUES ('{k}','{str(value)}')")
+   connection.commit()
 
 def createBuisness():
   cursor.execute(f"CREATE table if not exists buisness (id int({ID_SIZE}), name varchar({STRING_LENGTH}), phone varchar({PHONE_NUMBER_LENGTH}), address TEXT, PRIMARY KEY(id))")
@@ -80,3 +82,5 @@ def getTags(filter):
 
 def closeConnection():
   connection.close()
+connect()
+createTables()
