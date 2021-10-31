@@ -28,6 +28,7 @@ def filterList():
     def add_header(response):
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
+    print(filterList)
     return json.dumps(filterList)
 
 if __name__ == "__main__":
