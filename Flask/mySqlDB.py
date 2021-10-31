@@ -13,7 +13,8 @@ def connect():
   connection = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="Meerxn3342!",
+    # passwd="1234",
+    # port=4000
   )
   cursor = connection.cursor()
 
@@ -63,7 +64,7 @@ def createBuisnessTags():
 def getOccasions():
   cursor.execute("SELECT name FROM occasions")
   results= cursor.fetchall()
-  return results
+  return [result[0] for result in results]
 
 def getFilters(occasion):
   output = {}
