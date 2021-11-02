@@ -13,7 +13,8 @@ def connect():
   connection = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="",
+    # passwd="1234",
+    # port=4000
   )
   cursor = connection.cursor()
 
@@ -37,12 +38,20 @@ def createOccasions():
   connection.commit()
 
 def createOccasionsFilters():
+  filters = ['Food', 'shopping', 'sightseeing']
   cursor.execute(f"CREATE table if not exists occasionsfilters (id int({ID_SIZE}), occasionid int({ID_SIZE}), filter varchar({STRING_LENGTH}), PRIMARY KEY(id))")
+  for i in range(3):
+   cursor.execute(f"REPLACE INTO occasionsfilters (id, occasionid, filter) VALUES ({i},0,\"{filters[i]}\")")
   connection.commit()
 
 def createFiltersTags():
-  cursor.execute(f"CREATE table if not exists filterTags (filterid int({ID_SIZE}), tag varchar({STRING_LENGTH}), PRIMARY KEY(filterid,tag))")
-  connection.commit()
+   tags = {0:["Chinese","Japenese","Mexican"], 1:["Local Small Market","Clothing Thrift Store"], 2:["Events","Local Festivals"]}
+   #tags = ['Mexican','Japanese','Chinese']
+   cursor.execute(f"CREATE table if not exists filterTags (filterid int({ID_SIZE}), tag varchar({STRING_LENGTH}), PRIMARY KEY(filterid,tag))")
+   for k,v in tags.items():
+     for value in v:
+      cursor.execute(f"REPLACE INTO filterTags (filterid,tag) VALUES ('{k}','{str(value)}')")
+   connection.commit()
 
 def createBuisness():
   cursor.execute(f"CREATE table if not exists buisness (id int({ID_SIZE}), name varchar({STRING_LENGTH}), phone varchar({PHONE_NUMBER_LENGTH}), address TEXT, PRIMARY KEY(id))")
@@ -55,7 +64,24 @@ def createBuisnessTags():
 def getOccasions():
   cursor.execute("SELECT name FROM occasions")
   results= cursor.fetchall()
-  return results
+  return [result[0] for result in results]
+
+def getFilters(occasion):
+  output = {}
+  query = f"SELECT f.id, f.filter from occasionsfilters f, occasions o where o.id=f.occasionid and o.name=\"{occasion}\""
+  cursor.execute(query)
+  filters= cursor.fetchall()
+  for filter in filters:
+    id,name = filter
+    output[name] = getTags(id)
+  return output
+
+def getTags(filter):
+  cursor.execute(f"SELECT tag from filterTags where filterid='{filter}'")
+  results=cursor.fetchall()
+  return [result[0] for result in results]
 
 def closeConnection():
   connection.close()
+connect()
+createTables()
