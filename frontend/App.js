@@ -15,6 +15,13 @@ export default function App () {
       }
       fetchOccasions();
   }, []);
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: 40,
+      alignItems: "center"
+    }
+  });
   
   //list component just to list occasions for now 
   const list = () => {
@@ -27,5 +34,8 @@ export default function App () {
     });
   };
 // main render return
-  return <View>{list()}</View>;
+  return (<View style={styles.container}>
+    <Text style={{fontSize:25,padding:15}}>OCCASIONS FROM API BELOW</Text>
+    {list()}
+    </View>);
 };
