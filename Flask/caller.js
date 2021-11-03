@@ -1,4 +1,4 @@
-
+import { createStackNavigator } from 'react-navigation-stack';
 // This file contains all the template code to fetch data from the flask app
 
 
