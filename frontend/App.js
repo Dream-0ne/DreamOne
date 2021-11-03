@@ -1,40 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { StyleSheet, Text, View,Picker } from 'react-native';
 import Constants from "expo-constants";
 
 
-export default function App() {
-  const { manifest } = Constants;
-  const [selectedValue, setSelectedValue] = useState("java");
-  async function getOccasions() {
-    const url = `http://${manifest.debuggerHost.split(':').shift()}:5000/occasions`;
-    console.log(url);
-    await fetch(url)
-    .then(response => response.json())  
-    .then(json => {
-        console.log(json);
-    })
-  }
-  return (
-    <View style={styles.container}>
-      <Picker
-        selectedValue={selectedValue}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue, itemIndex) => {setSelectedValue(itemValue)
-        getOccasions()}}
-      >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 40,
-    alignItems: "center"
-  }
-});
+export default function App () {
+  const [occasions, updateOccasions] = React.useState([]);
+// Component did mount function that does api call
+  useEffect(function effectFunction() {
+      async function fetchOccasions() {
+          const response = await fetch('https://ancient-island-59052.herokuapp.com/occasions');
+          const json = await response.json();
+          updateOccasions(json);
+      }
+      fetchOccasions();
+  }, []);
+  
+  //list component just to list occasions for now 
+  const list = () => {
+    return occasions.map((element) => {
+      return (
+        <View key={element} style={{margin: 10}}>
+          <Text>{element}</Text>
+        </View>
+      );
+    });
+  };
+// main render return
+  return <View>{list()}</View>;
+};
