@@ -1,41 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {useState,useEffect} from 'react';
-import { StyleSheet, Text, View,Picker } from 'react-native';
-import Constants from "expo-constants";
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import  OccasionPage from "./components/OccasionPage";
+import LogoPage from "./components/LogoPage"
+
+const Stack = createNativeStackNavigator();
+
+function MyStack() {
+  return (
+    <Stack.Navigator initialRouteName="Logo">
+      <Stack.Screen name="Logo" component={LogoPage} />
+      <Stack.Screen name="Occasions" component={OccasionPage} />
+      
+    </Stack.Navigator> 
+  );
+}
 
 
 export default function App () {
-  const [occasions, updateOccasions] = React.useState([]);
-// Component did mount function that does api call
-  useEffect(function effectFunction() {
-      async function fetchOccasions() {
-          const response = await fetch('https://ancient-island-59052.herokuapp.com/occasions');
-          const json = await response.json();
-          updateOccasions(json);
-      }
-      fetchOccasions();
-  }, []);
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: 40,
-      alignItems: "center"
-    }
-  });
-  
-  //list component just to list occasions for now 
-  const list = () => {
-    return occasions.map((element) => {
-      return (
-        <View key={element} style={{margin: 10}}>
-          <Text>{element}</Text>
-        </View>
-      );
-    });
-  };
-// main render return
-  return (<View style={styles.container}>
-    <Text style={{fontSize:25,padding:15}}>OCCASIONS FROM API BELOW</Text>
-    {list()}
-    </View>);
+ 
+
+  return ( 
+    <NavigationContainer>
+    <MyStack />
+  </NavigationContainer>);
 };
