@@ -1,7 +1,7 @@
 # DreamOne
 
-## Sprint 2:
-- We are currently in Sprint 2 from 22nd October - 5th November !
+## Sprint 4:
+- We are currently in Sprint 4 from 5th November - 12th November !
 
 
 ## Contributing
