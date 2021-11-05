@@ -58,7 +58,7 @@ export default function OccasionPage ({naivation}) {
             {list()}
             
         </Picker>
-        <Button title = "submit" containerStyle = {styles.button}
+        <Button title = "Select Occasion" containerStyle = {styles.button}
          buttonStyle = {{backgroundColor : "#C0988D",borderRadius: 100, top: -40}} onPress = {()=>{alert("you clicked " + selectedOccasion)}} /> 
          {/* onPress */}
       
