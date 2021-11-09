@@ -13,3 +13,12 @@ async function getOccasions() {
   })
 }
 getOccasions();
+// This method will return a json object with keys being filters and values being the requirements
+async function getFilters() {
+  const url = 'http://localhost:5000/filters'
+  fetch(url)
+  .then(response => response.json())  
+  .then(json => {
+      console.log(json);
+  })
+}
