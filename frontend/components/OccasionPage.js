@@ -8,7 +8,7 @@ import {Picker} from '@react-native-picker/picker';
 import { Button } from 'react-native-elements';
 
 
-export default function OccasionPage ({naivation}) {
+export default function OccasionPage ({navigation}) {
   const [selectedOccasion, setSelectedOccasion] = useState();
   console.log(selectedOccasion);
   const [showPicker , setPicker] = useState(false);
@@ -35,7 +35,11 @@ export default function OccasionPage ({naivation}) {
       );
     });
   };
+  function switchPage(){
 
+    navigation.navigate('Filter', {selectedOccasion : selectedOccasion});
+
+  }
   function showPickerHelper(){
     setPicker(true);
   }
@@ -59,7 +63,7 @@ export default function OccasionPage ({naivation}) {
             
         </Picker>
         <Button title = "Select Occasion" containerStyle = {styles.button}
-         buttonStyle = {{backgroundColor : "#C0988D",borderRadius: 100, top: -40}} onPress = {()=>{alert("you clicked " + selectedOccasion)}} /> 
+         buttonStyle = {{backgroundColor : "#C0988D",borderRadius: 100, top: -40}} onPress = {()=>{switchPage()}} /> 
          {/* onPress */}
       
         </View>
