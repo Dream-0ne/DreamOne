@@ -10,8 +10,8 @@ const Stack = createNativeStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator initialRouteName="Logo">
-      <Stack.Screen name="Logo" component={LogoPage} />
-      <Stack.Screen name="Occasions" component={OccasionPage} />
+      <Stack.Screen name="Logo" component={LogoPage} options={{headerShown: false}} />
+      <Stack.Screen name="Occasions" component={OccasionPage} options={{headerShown:false}} />
       
     </Stack.Navigator> 
   );
