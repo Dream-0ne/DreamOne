@@ -6,11 +6,23 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
 import {Picker} from '@react-native-picker/picker';
 import { Button } from 'react-native-elements';
+import {
+  Pressable,
+  Box,
+  HStack,
+  Spacer,
+  Flex,
+  Center,
+  NativeBaseProvider,
+  Modal,
+  FormControl,
+  Input,
+  Checkbox,
+} from "native-base"
 
 
 export default function OccasionPage ({navigation}) {
   const [selectedOccasion, setSelectedOccasion] = useState();
-  console.log(selectedOccasion);
   const [showPicker , setPicker] = useState(false);
 
   
@@ -45,6 +57,7 @@ export default function OccasionPage ({navigation}) {
   }
   if (showPicker === true){
     return (
+      <NativeBaseProvider>
       <View style={styles.container}>
        <HeaderComponent text = "Occasions"/>
        
@@ -67,10 +80,11 @@ export default function OccasionPage ({navigation}) {
          {/* onPress */}
       
         </View>
-        
+        </NativeBaseProvider>
         );
   }else{
     return (
+      <NativeBaseProvider> 
       <View style={styles.container}>
        <HeaderComponent text = "Occasions"/>
        
@@ -81,6 +95,7 @@ export default function OccasionPage ({navigation}) {
     
        
         </View>
+        </NativeBaseProvider>
         
         );
   }
@@ -102,7 +117,7 @@ const styles = StyleSheet.create({
   },
   button : {
     paddingTop : 50,
-    color : "#C0988D"
+    
   }
 });
 

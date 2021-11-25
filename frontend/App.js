@@ -8,6 +8,7 @@ import FilterPage from "./components/FilterPage";
 //import image from "./assets/banner.png";
 import HeaderImage from './components/HeaderImage';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import DragNDrop from './components/DragNDrop';
 const Stack = createNativeStackNavigator();
 
 function MyStack() {
@@ -15,20 +16,28 @@ function MyStack() {
     <Stack.Navigator initialRouteName="Logo">
       <Stack.Screen name="Logo" component={LogoPage} options = {{headerShown : false}}/>
       <Stack.Screen name="Occasions" component={OccasionPage} options = {{ headerBackVisible : false,
-     headerStyle: {
-      backgroundColor: '#C99789',
-     },
-      headerTitle: props => <HeaderImage {...props} />
+        headerStyle: {
+        backgroundColor: '#C99789',
+        },
+        headerTitle: props => <HeaderImage {...props} />
       
       }}/>
       <Stack.Screen name="Filter" component={FilterPage} options = {{ 
-     headerStyle: {
-      backgroundColor: '#C99789',
-     },
-     headerTintColor: 'white',
-      headerTitle: props => <HeaderImage {...props} />
+        headerStyle: {
+        backgroundColor: '#C99789',
+        },
+        headerTintColor: 'white',
+        headerTitle: props => <HeaderImage {...props} />
       
-      }}/>
+        }}/>
+         <Stack.Screen name="Drag and Drop" component={DragNDrop} options = {{ 
+        headerStyle: {
+        backgroundColor: '#C99789',
+        },
+        headerTintColor: 'white',
+        headerTitle: props => <HeaderImage {...props} />
+      
+        }}/>
 
       
     </Stack.Navigator> 
