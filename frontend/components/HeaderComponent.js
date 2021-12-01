@@ -4,7 +4,7 @@ import image from "../assets/banner.png";
 import { View} from 'react-native';
 const HeaderComponent = (props) => {
     const name = props.text;
-    console.log(name);
+    //console.log(name);
     return(
         <View style = {{top : 15}}>
             
