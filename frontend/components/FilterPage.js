@@ -35,6 +35,7 @@ export default function filterPage({ route, navigation }) {
   const [selectedFilter, setSelectedFilter] = useState({});
   const [selecttedOptions, setSelectedOption] = useState([]);
   const [chips, setChips] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState("");
   const theme = extendTheme({
     colors: {
       // Add new color
@@ -53,8 +54,11 @@ export default function filterPage({ route, navigation }) {
   });
   function saveHelper() {
     let temp = chips;
+    
     selecttedOptions.forEach((item) => {
+      
       if (chips.indexOf(item) < 0)
+        //console.log("pushed chips: " + item);
         temp.push(item);
     })
     setChips(temp);
@@ -102,6 +106,7 @@ export default function filterPage({ route, navigation }) {
             onPress={() => {
               setModalVisible(true);
               setOptions(data);
+              setCurrentFilter(filter);
 
             }}
           >
@@ -133,12 +138,7 @@ export default function filterPage({ route, navigation }) {
     
     //console.log("options are: " + JSON.stringify(options));
     options.forEach((item) => {
-      if (chips.indexOf(item.name) > -1){
-        // checkBox.push(    
-        //   <Checkbox value={item.name} defaultIsChecked colorScheme="amber">
-        //     {item.name}
-        //   </Checkbox>
-        // );
+      if (chips.indexOf(`${currentFilter}:${item.name}`) > -1){
       }else{
         checkBox.push(    
           <Checkbox value={item.name} colorScheme="amber">
@@ -156,8 +156,8 @@ export default function filterPage({ route, navigation }) {
     let temp = selecttedOptions;
     //console.log("value is "  +value);
     value.forEach((item) => {
-      if (temp.indexOf(item) < 0) {
-        temp.push(item);
+      if (temp.indexOf(`${currentFilter}:${item}`) < 0) {
+        temp.push(`${currentFilter}:${item}`);
       }
 
     })
@@ -173,17 +173,17 @@ export default function filterPage({ route, navigation }) {
   function showChips() {
     let temp = [];
     chips.forEach((item) => {
-      let itemName = item;
+      let itemName = item.split(":")[1];
       temp.push(
         <View style={{ padding: 5 , alignItems : "center"}}>
-          <Pressable onPress = {()=>{removeChip(itemName)}}>
+          <Pressable onPress = {()=>{removeChip(item)}}>
             
             <Box p="3" rounded="100" width="170" bg="primary.500"  shadow={7}
             >
               <View style = {styles.chipBoxContainer}>
               <Text style = {{top : 4, color : "black" , paddingRight : 15}}> 
                 {/* style={{ textAlign: "center" }} */}
-                {item}
+                {itemName}
               </Text>
               <Entypo name="circle-with-cross" size={24} color="pink" />
               </View>
@@ -195,9 +195,6 @@ export default function filterPage({ route, navigation }) {
     })
     return temp;
   }
-  // }
-  //console.log(filterButtons.length);
-  //console.log("AndrewTesting: " + JSON.stringify(selectedFilter));
   return (
     <NativeBaseProvider theme={theme}>
 
