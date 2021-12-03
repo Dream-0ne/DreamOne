@@ -44,7 +44,7 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
       }}
 
       draggingStyle={styles.dragging}
-      dragPayload={{ setCardPos }}
+      dragPayload={{ setCardPos , name}}
       renderContent={() => {
         return (
         <View>

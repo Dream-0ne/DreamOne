@@ -54,9 +54,9 @@ export default function filterPage({ route, navigation }) {
   });
   function saveHelper() {
     let temp = chips;
-    
+
     selecttedOptions.forEach((item) => {
-      
+
       if (chips.indexOf(item) < 0)
         //console.log("pushed chips: " + item);
         temp.push(item);
@@ -129,25 +129,25 @@ export default function filterPage({ route, navigation }) {
 
   };
 
-  function switchPage(){
-    navigation.navigate('Drag and Drop', {selectedOptions : selecttedOptions});
+  function switchPage() {
+    navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions });
   }
 
   function showOptions() {
     let checkBox = []
-    
+
     //console.log("options are: " + JSON.stringify(options));
     options.forEach((item) => {
-      if (chips.indexOf(`${currentFilter}:${item.name}`) > -1){
-      }else{
-        checkBox.push(    
+      if (chips.indexOf(`${currentFilter}:${item.name}`) > -1) {
+      } else {
+        checkBox.push(
           <Checkbox value={item.name} colorScheme="amber">
             {item.name}
           </Checkbox>
         );
       }
-      
-      
+
+
     })
     return checkBox;
   }
@@ -163,7 +163,7 @@ export default function filterPage({ route, navigation }) {
     })
     setSelectedOption(temp);
   }
-  function removeChip(item){
+  function removeChip(item) {
     //console.log(item);
     let temp = chips;
     const returnList = temp.filter(chip => chip !== item);
@@ -175,17 +175,17 @@ export default function filterPage({ route, navigation }) {
     chips.forEach((item) => {
       let itemName = item.split(":")[1];
       temp.push(
-        <View style={{ padding: 5 , alignItems : "center"}}>
-          <Pressable onPress = {()=>{removeChip(item)}}>
-            
-            <Box p="3" rounded="100" width="170" bg="primary.500"  shadow={7}
+        <View style={{ padding: 5, alignItems: "center" }}>
+          <Pressable onPress={() => { removeChip(item) }}>
+
+            <Box p="3" rounded="100" width="170" bg="primary.500" shadow={7}
             >
-              <View style = {styles.chipBoxContainer}>
-              <Text style = {{top : 4, color : "black" , paddingRight : 15}}> 
-                {/* style={{ textAlign: "center" }} */}
-                {itemName}
-              </Text>
-              <Entypo name="circle-with-cross" size={24} color="pink" />
+              <View style={styles.chipBoxContainer}>
+                <Text style={{ top: 4, color: "black", paddingRight: 15 }}>
+                  {/* style={{ textAlign: "center" }} */}
+                  {itemName}
+                </Text>
+                <Entypo name="circle-with-cross" size={24} color="pink" />
               </View>
             </Box>
           </Pressable>
@@ -213,13 +213,13 @@ export default function filterPage({ route, navigation }) {
         </View>
         <View style={styles.chipBox}>
 
-          <Box p="5" rounded="8"  bg="primary.50" width="300" >
-            <Text style={{ color: "grey" , fontSize : 20, textDecorationLine: 'underline'}}>
+          <Box p="5" rounded="8" bg="primary.50" width="300" >
+            <Text style={{ color: "grey", fontSize: 20, textDecorationLine: 'underline' }}>
               Your chosen perferences:
             </Text>
-            
+
             {showChips()}
-            
+
 
 
           </Box>
@@ -259,15 +259,15 @@ export default function filterPage({ route, navigation }) {
           </Modal>
         </View>
 
-        
-      <Button onPress = {()=> switchPage()}>
-        <View style= {{display : "flex",  flexDirection : "row" , justifyContent : "space-between",}}>
-        <Text style = {{top : 4}}>
-          select perferences
-        </Text>
-        <Entypo name="arrow-with-circle-right" size={24} color="black" style = {{left : 20, top: 0}}/>
-        </View>
-      </Button>
+
+        <Button onPress={() => switchPage()}>
+          <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
+            <Text style={{ top: 4 }}>
+              select perferences
+            </Text>
+            <Entypo name="arrow-with-circle-right" size={24} color="black" style={{ left: 20, top: 0 }} />
+          </View>
+        </Button>
       </ScrollView>
 
 
@@ -314,10 +314,10 @@ const styles = StyleSheet.create({
     top: 40,
     paddingBottom: 100,
   },
-  chipBoxContainer : {
-    display : "flex",
-    flexDirection : "row",
-    justifyContent : "space-between",
+  chipBoxContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
 
   }
 });

@@ -26,6 +26,10 @@ function DragNDrop({ route, navigation }) {
   const [deleteShow, setDeleteShow] = useState(false);
   const [plannerShow, setPlannerShow] = useState(true);
   const [height1, setHeight] = useState(0);
+  const [morningPlanner, setMorningPlanner] = useState("");
+  const [afternoonPlanner, setAfternoonPlanner] = useState("");
+  const [nightPlanner, setNightPlanner] = useState("");
+
   console.log(filter);
 
   useEffect(
@@ -81,6 +85,9 @@ function DragNDrop({ route, navigation }) {
     console.log(bool);
     setDeleteShow(bool);
   }
+  function switchPage() {
+    navigation.navigate('Detail View', { morning: morningPlanner, afternoon: afternoonPlanner, night: nightPlanner });
+  }
 
   if (plannerShow === false) {
     return (
@@ -96,7 +103,7 @@ function DragNDrop({ route, navigation }) {
   } else {
     return (
       <NativeBaseProvider>
-        <View style={{   padding : 0}}>
+        <View style={{ padding: 0 }}>
           <HeaderComponent text="Drag and Drop" />
         </View>
 
@@ -140,7 +147,9 @@ function DragNDrop({ route, navigation }) {
                   receptive={true}
 
                   onReceiveDragDrop={({ dragged: { payload } }) => {
+
                     payload?.setCardPos?.({ x: 207, y: 17 - offset * 100 });
+                    setMorningPlanner(payload?.name);
 
 
                     return DraxSnapbackTargetPreset.None;
@@ -156,6 +165,7 @@ function DragNDrop({ route, navigation }) {
 
                   onReceiveDragDrop={({ dragged: { payload } }) => {
                     payload?.setCardPos?.({ x: 207, y: 135 - offset * 100 });
+                    setAfternoonPlanner(payload?.name);
 
 
                     return DraxSnapbackTargetPreset.None;
@@ -171,12 +181,15 @@ function DragNDrop({ route, navigation }) {
 
                   onReceiveDragDrop={({ dragged: { payload } }) => {
                     payload?.setCardPos?.({ x: 207, y: 252 - offset * 100 });
+                    setNightPlanner(payload?.name);
 
                     return DraxSnapbackTargetPreset.None;
                   }}
                 />
 
-
+                <Button onPress={() => { switchPage() }}>
+                  Checkout the planner
+                </Button>
 
               </View>
 
