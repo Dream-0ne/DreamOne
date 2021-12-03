@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   draggable: {
     width: Dimensions.get('window').width / 2,
     backgroundColor: 'gray',
-    zIndex: 5,
+    zIndex: 100,
     padding: 5,
   },
   
