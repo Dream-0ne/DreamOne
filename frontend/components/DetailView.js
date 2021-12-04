@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
@@ -23,6 +23,7 @@ import {
     Stack,
     Heading,
     ScrollView,
+    Text,
 
 } from "native-base"
 
@@ -30,36 +31,37 @@ import {
 export default function DetailView({ navigation, route }) {
     const { morning, afternoon, night } = route.params;
 
-    const [showMorningPlanner, setShowMorningPlanner] = useState(morning.name !== undefined);
-    const [showAfternoonPlanner, setShowAfternoonPlanner] = useState(afternoon.name !== undefined);
-    const [showNightPlanner, setShowNightPlanner] = useState(night.name !== undefined);
-    console.log(showMorningPlanner + " " + showAfternoonPlanner + " " + showNightPlanner);
+    const [showMorningPlanner, setShowMorningPlanner] = useState(morning.name !== undefined && morning.name !== null);
+    const [showAfternoonPlanner, setShowAfternoonPlanner] = useState(afternoon.name !== undefined && afternoon.name !== null);
+    const [showNightPlanner, setShowNightPlanner] = useState(night.name !== undefined && night.name !== null);
+    //console.log(showMorningPlanner + " " + showAfternoonPlanner + " " + showNightPlanner);
     function showTags(tags) {
         let temp = [];
+
         for (const [key, value] of Object.entries(tags)) {
             value.forEach(element => {
+                console.log(element);
+                let leftOffset = 250;
                 temp.push(
-                    <Center
+                    <View style = {{padding : 4}}>
+                    <Box
+                        shadow="2"
+                        rounded="lg"
+                        w={{ base: "20", md: "100", lg: "md" }}
                         bg="warning.400"
-                        _dark={{
-                            bg: "warning.50",
-                        }}
-                        _text={{
-                            color: "warmGray.50",
-                            fontWeight: "700",
-                            fontSize: "xs",
-                        }}
-                        position="absolute"
-                        bottom="0"
-                        left = "250"
-                        px="3"
-                        py="1.5"
+                        style={{ padding: 4 }}
                     >
-                        {element}
-                    </Center>
+                        <Text fontWeight="medium" color="white" fontSize="sm" textAlign = "center">
+                          {element}
+                        </Text>
+                       
+                    </Box>
+                    </View>
                 );
+                leftOffset -= 20;
             });
         }
+        console.log(temp);
         return temp;
     }
     return (
@@ -139,16 +141,19 @@ export default function DetailView({ navigation, route }) {
                             <Text fontWeight="400">
                                 {morning.address}
                             </Text>
-                            
+                            <View style={{ display: "flex", flexDirection: "row" }}>
                                 {showTags(morning.tags)}
-                           
+
+
+                            </View >
+
                         </Stack>
 
                     </Box>
 
                 </View>}
 
-                {showAfternoonPlanner && <View style={{ alignItems: "center" }}>
+                {showAfternoonPlanner && <View style={{ alignItems: "center", paddingTop: 20 }}>
                     <Box
                         maxW="80"
                         rounded="lg"
@@ -218,14 +223,14 @@ export default function DetailView({ navigation, route }) {
                             <Text fontWeight="400">
                                 {afternoon.address}
                             </Text>
-                            
+
                             {showTags(afternoon.tags)}
-                            
+
                         </Stack>
                     </Box>
                 </View>}
 
-                {showNightPlanner && <View style={{ alignItems: "center" }}>
+                {showNightPlanner && <View style={{ alignItems: "center", paddingTop: 20 }}>
                     <Box
                         maxW="80"
                         rounded="lg"

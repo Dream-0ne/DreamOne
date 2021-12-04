@@ -42,7 +42,7 @@ function DragNDrop({ route, navigation }) {
         })
         tempString = tempString.substr(0,tempString.length-1);
         setSearchFilter(tempString);
-        console.log(searchFilter);
+        //console.log(searchFilter);
         const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + searchFilter);
         const json = await response.json();
 
@@ -91,7 +91,7 @@ function DragNDrop({ route, navigation }) {
   }
 
   function showDeleteFunction(bool) {
-    console.log(bool);
+    //console.log(bool);
     setDeleteShow(bool);
   }
   function switchPage() {
