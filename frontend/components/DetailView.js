@@ -139,7 +139,7 @@ export default function DetailView({ navigation, route }) {
                                         ml="-0.5"
                                         mt="-1"
                                     >
-                                        {morning.distance} ft from you
+                                        {morning.distance} miles from you
                                     </Text>
                                 </Stack>
                                 <Text fontWeight="400">
