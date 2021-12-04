@@ -13,10 +13,10 @@ import {
 
 
 
-export default function DragNDropItem({name ,address,y,offset,setOffset,showDelete}) {
+export default function DragNDropItem({name ,address,y,offset,setOffset,showDelete,picture ,distance ,tags}) {
   const [cardPos, setCardPos] = useState({ x: 0, y: y });
-  const [originalCardPos, setOriginalCardPos] = useState({ x: 0, y: y });
-  
+  const [dayTime,setDayTime] = useState("");
+  //console.log(picture);
   return (
     <View>
     <DraxView
@@ -44,7 +44,7 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
       }}
 
       draggingStyle={styles.dragging}
-      dragPayload={{ setCardPos , name}}
+      dragPayload={{ setCardPos , name, address, picture, distance, tags,setDayTime, dayTime}}
       renderContent={() => {
         return (
         <View>
@@ -52,7 +52,7 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
             {name} 
           </Text>
           <Text>
-              {address}
+            {address}
           </Text>
           
         </View>)

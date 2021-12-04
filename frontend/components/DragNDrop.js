@@ -26,16 +26,24 @@ function DragNDrop({ route, navigation }) {
   const [deleteShow, setDeleteShow] = useState(false);
   const [plannerShow, setPlannerShow] = useState(true);
   const [height1, setHeight] = useState(0);
-  const [morningPlanner, setMorningPlanner] = useState("");
-  const [afternoonPlanner, setAfternoonPlanner] = useState("");
-  const [nightPlanner, setNightPlanner] = useState("");
+  const [morningPlanner, setMorningPlanner] = useState({});
+  const [afternoonPlanner, setAfternoonPlanner] = useState({});
+  const [nightPlanner, setNightPlanner] = useState({});
+  const [searchFilter, setSearchFilter] = useState("");
 
-  console.log(filter);
 
   useEffect(
     function effectFunction() {
       async function fetchBusiness() {
-        const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + filter);
+        let tempString = "";
+        filter.forEach((item)=>{
+          tempString = tempString + item + ":";
+          
+        })
+        tempString = tempString.substr(0,tempString.length-1);
+        setSearchFilter(tempString);
+        console.log(searchFilter);
+        const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + searchFilter);
         const json = await response.json();
 
         setBusiness(json);
@@ -63,11 +71,12 @@ function DragNDrop({ route, navigation }) {
       if (y === 100) {
         y -= 100;
       }
-
+      //console.log(item.photo_ref);
 
       temp.push(
 
         <DragNDropItem name={item.name} address={item.address} y={y} offset={offset}
+          picture = {item.photo_ref} distance = {item.distance} tags = {item.tags}
           setOffset={(value) => setOffsetFunction(value)}
           showDelete={(bool) => showDeleteFunction(bool)} />
       )
@@ -96,7 +105,7 @@ function DragNDrop({ route, navigation }) {
           <HeaderComponent text="Drag and Drop" />
         </View>
         <Text>
-          There is no local business with "{filter}" near you.
+          There is no local business with "{searchFilter}" near you.
         </Text>
       </View>)
 
@@ -149,7 +158,10 @@ function DragNDrop({ route, navigation }) {
                   onReceiveDragDrop={({ dragged: { payload } }) => {
 
                     payload?.setCardPos?.({ x: 207, y: 17 - offset * 100 });
-                    setMorningPlanner(payload?.name);
+                    payload?.setDayTime?.("morning");
+                    setMorningPlanner({"name" : payload?.name , "address" : payload?.address,
+                                        "picture" : payload?.picture, "distance" : payload?.distance,
+                                         "tags" : payload?.tags });
 
 
                     return DraxSnapbackTargetPreset.None;
@@ -165,7 +177,10 @@ function DragNDrop({ route, navigation }) {
 
                   onReceiveDragDrop={({ dragged: { payload } }) => {
                     payload?.setCardPos?.({ x: 207, y: 135 - offset * 100 });
-                    setAfternoonPlanner(payload?.name);
+                    payload?.setDayTime?.("afternoon");
+                    setAfternoonPlanner({"name" : payload?.name , "address" : payload?.address,
+                    "picture" : payload?.picture, "distance" : payload?.distance,
+                     "tags" : payload?.tags });
 
 
                     return DraxSnapbackTargetPreset.None;
@@ -181,7 +196,10 @@ function DragNDrop({ route, navigation }) {
 
                   onReceiveDragDrop={({ dragged: { payload } }) => {
                     payload?.setCardPos?.({ x: 207, y: 252 - offset * 100 });
-                    setNightPlanner(payload?.name);
+                    payload?.setDayTime?.("night");
+                    setNightPlanner({"name" : payload?.name , "address" : payload?.address,
+                    "picture" : payload?.picture, "distance" : payload?.distance,
+                     "tags" : payload?.tags });
 
                     return DraxSnapbackTargetPreset.None;
                   }}
@@ -204,6 +222,15 @@ function DragNDrop({ route, navigation }) {
               receivingStyle={styles.receiving}
               onReceiveDragDrop={({ dragged: { payload } }) => {
                 payload?.setCardPos?.({ x: originalCardPos.x, y: originalCardPos.y });
+                if (payload?.dayTime === "morning"){
+                  setMorningPlanner(null);
+                }else if (payload?.dayTime === "afternoon"){
+                  setAfternoonPlanner(null);
+                }else if (payload?.dayTime === "night"){
+                  setNightPlanner(null);
+                }
+                
+
                 return DraxSnapbackTargetPreset.None;
               }}
               renderContent={() => {
