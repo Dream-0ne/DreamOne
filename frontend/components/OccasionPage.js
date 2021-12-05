@@ -6,6 +6,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
 import { Picker } from '@react-native-picker/picker';
 import { Button } from 'react-native-elements';
+import GetLocation from 'react-native-get-location'
+import * as Location from "expo-location";
+
+
 import {
   Pressable,
   Box,
@@ -29,6 +33,20 @@ export default function OccasionPage({ navigation }) {
   const [occasions, updateOccasions] = useState([]);
   // Component did mount function that does api call
   useEffect(function effectFunction() {
+
+       (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
+    })();
+
+
+
     async function fetchOccasions() {
       const response = await fetch('https://ancient-island-59052.herokuapp.com/occasions');
       const json = await response.json();
@@ -36,6 +54,18 @@ export default function OccasionPage({ navigation }) {
     }
     fetchOccasions();
   }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //       return;
+  //     }
+
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //   })();
+  // }, []);
 
 
   //list component just to list occasions for now 
@@ -48,11 +78,22 @@ export default function OccasionPage({ navigation }) {
     });
   };
   function switchPage() {
-
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+  })
+  .then(location => {
+      console.log(location);
+  })
+  .catch(error => {
+      const { code, message } = error;
+      console.warn(code, message);
+  })
     navigation.navigate('Filter', { selectedOccasion: selectedOccasion });
 
   }
   function showPickerHelper() {
+    
     setPicker(true);
   }
   if (showPicker === true) {
