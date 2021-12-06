@@ -27,7 +27,7 @@ import { Entypo } from '@expo/vector-icons';
 
 
 export default function filterPage({ route, navigation }) {
-  const { selectedOccasion } = route.params;
+  const { selectedOccasion, lat, long } = route.params;
   const [occasion, useOccasion] = useState(selectedOccasion);
   const [filters, setFilters] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,6 +36,8 @@ export default function filterPage({ route, navigation }) {
   const [selecttedOptions, setSelectedOption] = useState([]);
   const [chips, setChips] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");
+  const [latitude, setLatitude] = useState(lat);
+  const [longitude, setLongitude] = useState(long);
   const theme = extendTheme({
     colors: {
       // Add new color
@@ -94,6 +96,7 @@ export default function filterPage({ route, navigation }) {
   function list() {
     let temp = [];
     let x = -40;
+    let index = 0;
     for (const [filter, options] of Object.entries(filters)) {
       let data = [];
       //console.log(JSON.stringify(selectedFilter[filter])); 
@@ -101,7 +104,7 @@ export default function filterPage({ route, navigation }) {
         data.push({ id: `${filter}.${index}`, name: item }); //id : Food.0 , name : Chinese
       })
       temp.push(
-        <View style={{ alignItems: "center", justifyContent: "center", paddingBottom: 10 }}>
+        <View key={index} style={{ alignItems: "center", justifyContent: "center", paddingBottom: 10 }}>
           <Pressable
             onPress={() => {
               setModalVisible(true);
@@ -124,13 +127,14 @@ export default function filterPage({ route, navigation }) {
 
         </View>
       );
+      index += 1;
     }
     return temp;
 
   };
 
   function switchPage() {
-    navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions });
+    navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude });
   }
 
   function showOptions() {

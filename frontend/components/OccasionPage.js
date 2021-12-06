@@ -31,6 +31,8 @@ export default function OccasionPage({ navigation }) {
 
 
   const [occasions, updateOccasions] = useState([]);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   // Component did mount function that does api call
   useEffect(function effectFunction() {
 
@@ -42,7 +44,9 @@ export default function OccasionPage({ navigation }) {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location)
+      console.log(location);
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
     })();
 
 
@@ -72,7 +76,7 @@ export default function OccasionPage({ navigation }) {
   const list = () => {
     return occasions.map((element) => {
       return (
-        <Picker.Item label={element} value={element} />
+        <Picker.Item label={element} key= {element} value={element} />
 
       );
     });
@@ -84,12 +88,17 @@ export default function OccasionPage({ navigation }) {
   })
   .then(location => {
       console.log(location);
+      // setLatitude(location.coords.latitude);
+      // setLongitude(location.coords.longitude);
+      
+
   })
   .catch(error => {
       const { code, message } = error;
       console.warn(code, message);
   })
-    navigation.navigate('Filter', { selectedOccasion: selectedOccasion });
+    navigation.navigate('Filter', 
+      { selectedOccasion: selectedOccasion, lat : latitude, long: longitude });
 
   }
   function showPickerHelper() {

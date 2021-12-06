@@ -17,7 +17,7 @@ import { height } from 'dom-helpers';
 
 
 function DragNDrop({ route, navigation }) {
-  const { selectedOptions } = route.params;
+  const { selectedOptions,lat,long} = route.params;
 
   const [originalCardPos, setOriginalCardPos] = useState({ x: 0, y: 0 });
   const [business, setBusiness] = useState([]);
@@ -35,7 +35,7 @@ function DragNDrop({ route, navigation }) {
   useEffect(
     function effectFunction() {
       async function fetchBusiness() {
-        const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + filter);
+        const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + lat + "/"+long+"/"+filter);
         const json = await response.json();
 
         setBusiness(json);
