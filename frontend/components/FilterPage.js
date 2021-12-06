@@ -28,6 +28,7 @@ import { Entypo } from '@expo/vector-icons';
 
 export default function filterPage({ route, navigation }) {
   const { selectedOccasion, lat, long } = route.params;
+  console.log("uhu: " +lat + " " + long);
   const [occasion, useOccasion] = useState(selectedOccasion);
   const [filters, setFilters] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
