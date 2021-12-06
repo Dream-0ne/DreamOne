@@ -44,7 +44,7 @@ function DragNDrop({ route, navigation }) {
         setSearchFilter(tempString);
         //console.log(searchFilter);
         const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + lat + "/" + long+ "/"+ searchFilter);
-        console.log('https://ancient-island-59052.herokuapp.com/' + lat + "/" + long+ "/"+ searchFilter);
+        // console.log('https://ancient-island-59052.herokuapp.com/' + lat + "/" + long+ "/"+ searchFilter);
         const json = await response.json();
 
         setBusiness(json);

@@ -29,13 +29,13 @@ export default function DetailView({ navigation, route }) {
     //console.log(showMorningPlanner + " " + showAfternoonPlanner + " " + showNightPlanner);
     function showTags(tags) {
         let temp = [];
-
+        let index = 0;
         for (const [key, value] of Object.entries(tags)) {
             value.forEach(element => {
                 console.log(element);
                 let leftOffset = 250;
                 temp.push(
-                    <View style={{ padding: 4 }}>
+                    <View key = {index} style={{ padding: 4 }}>
                         <Box
                             shadow="2"
                             rounded="lg"
@@ -52,8 +52,9 @@ export default function DetailView({ navigation, route }) {
                 );
                 leftOffset -= 20;
             });
+            index += 1;
         }
-        console.log(temp);
+       
         return temp;
     }
 
@@ -139,7 +140,7 @@ export default function DetailView({ navigation, route }) {
                                         ml="-0.5"
                                         mt="-1"
                                     >
-                                        {morning.distance} miles from you
+                                        {morning.distance} from you
                                     </Text>
                                 </Stack>
                                 <Text fontWeight="400">
@@ -221,7 +222,7 @@ export default function DetailView({ navigation, route }) {
                                         ml="-0.5"
                                         mt="-1"
                                     >
-                                        {afternoon.distance} ft from you
+                                        {afternoon.distance} from you
                                     </Text>
                                 </Stack>
                                 <Text fontWeight="400">
@@ -298,7 +299,7 @@ export default function DetailView({ navigation, route }) {
                                         ml="-0.5"
                                         mt="-1"
                                     >
-                                        {night.distance} ft from you
+                                        {night.distance} from you
                                     </Text>
                                 </Stack>
                                 <Text fontWeight="400">
