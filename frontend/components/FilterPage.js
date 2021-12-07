@@ -41,7 +41,8 @@ export default function filterPage({ route, navigation }) {
       primary: {
         50: '#FCE9DB',
         55: '#C99789', 
-        60: "#fed7aa"
+        60: "#fed7aa",
+        65: "FFE9DC"
       },
       // Redefinig only one shade, rest of the color will remain same.
       amber: {
@@ -182,13 +183,13 @@ export default function filterPage({ route, navigation }) {
           <Pressable onPress = {()=>{removeChip(itemName)}}>
             
             <Box p="3" rounded="100" width="170" bg="primary.50"  shadow={7}
-            >
+            > 
               <View style = {styles.chipBoxContainer}>
               <Text style = {{top : 4, color : "black" , paddingRight : 15}}> 
                 {/* style={{ textAlign: "center" }} */}
                 {item}
               </Text>
-              <Entypo name="circle-with-cross" size={24} color="primary.55" />
+              <Entypo name="circle-with-cross" size={24} color="primary.65" />
               </View>
             </Box>
           </Pressable>
