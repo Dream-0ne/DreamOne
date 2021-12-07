@@ -13,6 +13,7 @@ import {
 import DragNDropItem from './DragNDropItem';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { height } from 'dom-helpers';
+import { color } from 'react-native-elements/dist/helpers';
 
 
 
@@ -31,7 +32,6 @@ function DragNDrop({ route, navigation }) {
   const [afternoonPlanner, setAfternoonPlanner] = useState({});
   const [nightPlanner, setNightPlanner] = useState({});
   const [searchFilter, setSearchFilter] = useState("");
-
 
   useEffect(
     function effectFunction() {
@@ -114,7 +114,7 @@ function DragNDrop({ route, navigation }) {
   } else {
     return (
       <NativeBaseProvider>
-        <View style={{ padding: 0 }}>
+        <View style={{ padding: 0, color: "mistyrose"}}>
           <HeaderComponent text="Drag and Drop" />
         </View>
 
@@ -213,7 +213,7 @@ function DragNDrop({ route, navigation }) {
                   }}
                 />
 
-                <Button onPress={() => { switchPage() }}>
+                <Button onPress={() => { switchPage() }} onLongPress = {() => style= {... {backgroundColor:"linen"}}} style={{backgroundColor: "darksalmon"}}>
                   Checkout the planner
                 </Button>
 
@@ -305,27 +305,27 @@ const styles = StyleSheet.create({
   deleteArea: {
     width: Dimensions.get('window').width,
     height: 100,
-    backgroundColor: 'red',
+    backgroundColor: 'whitesmoke',
     zIndex: 0,
     top: -90,
   },
   draggable: {
     width: Dimensions.get('window').width / 2,
     height: 100,
-    backgroundColor: 'gray',
+    backgroundColor: 'peachpuff',
     zIndex: 5,
     padding: 5,
   },
   receiver: {
     width: Dimensions.get('window').width / 2,
     height: 100,
-    backgroundColor: 'green',
+    backgroundColor: 'linen',
     zIndex: 0,
   },
   deleteReceiver: {
     width: Dimensions.get('window').width,
     height: 100,
-    backgroundColor: 'red',
+    backgroundColor: 'whitesmoke',
     zIndex: 0,
 
 
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     opacity: 0.2,
   },
   receiving: {
-    borderColor: '#ff00ff',
+    borderColor: 'black',
     borderWidth: 5,
   },
 

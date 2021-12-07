@@ -27,6 +27,11 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
         height: 100,
         top: cardPos.y,
         left: cardPos.x,
+        backgroundColor: "papayawhip", 
+        borderColor: "peru", 
+        borderWidth: 1, 
+        paddingBottom: 5, 
+        paddingRight: 5
       }
       ]
       }
@@ -47,7 +52,7 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
       dragPayload={{ setCardPos , name, address, picture, distance, tags,setDayTime, dayTime}}
       renderContent={() => {
         return (
-        <View>
+        <View style={{borderColor: "peru"}}>
           <Text>
             {name} 
           </Text>
