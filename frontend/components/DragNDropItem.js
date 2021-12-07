@@ -31,7 +31,8 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
         borderColor: "peru", 
         borderWidth: 1, 
         paddingBottom: 5, 
-        paddingRight: 5
+        paddingRight: 5, 
+        marginBottom: 0.5, 
       }
       ]
       }

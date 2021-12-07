@@ -154,8 +154,9 @@ function DragNDrop({ route, navigation }) {
                 </Text>
                 <DraxView
                   style={styles.receiver}
+                  receivingStyle= {{marginBottom: 0.5, marginLeft:0.5}}
                   receivingStyle={styles.receiving}
-                  receptive={true}
+                  receptive={true} 
 
                   onReceiveDragDrop={({ dragged: { payload } }) => {
 
@@ -301,6 +302,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: -1,
 
+
   },
   deleteArea: {
     width: Dimensions.get('window').width,
@@ -315,6 +317,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'peachpuff',
     zIndex: 5,
     padding: 5,
+    paddingLeft:5,
   },
   receiver: {
     width: Dimensions.get('window').width / 2,
