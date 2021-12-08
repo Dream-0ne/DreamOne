@@ -247,7 +247,7 @@ export default function filterPage({ route, navigation }) {
           >
             <View style={styles.instruction}>
               <Text style={{ color: "white", fontSize: 20, top: -30, right: -30 }}>
-                Specify your perferences from below
+                Specify your preferences from below
               </Text>
 
             </View>
@@ -258,7 +258,7 @@ export default function filterPage({ route, navigation }) {
 
           <Box p="5" rounded="8" bg="primary.55" width="360" >
             <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>
-              Your chosen perferences:
+              Your chosen Preferences:
             </Text>
 
             {showChips()}
@@ -271,7 +271,7 @@ export default function filterPage({ route, navigation }) {
           <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
-              <Modal.Header>Choose your perferences</Modal.Header>
+              <Modal.Header>Choose your Preferences</Modal.Header>
               <Modal.Body>
                 <Checkbox.Group onChange={(value) => { storeOption(value) }}>
                   {showOptions()}
