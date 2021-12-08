@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
 import { DraxProvider, DraxScrollView, DraxView, DraxList, DraxSnapbackTargetPreset } from 'react-native-drax';
+import { LogBox } from 'react-native';
+
 import {
   NativeBaseProvider,
   ScrollView,
@@ -18,6 +20,8 @@ import { Feather } from '@expo/vector-icons';
 
 function DragNDrop({ route, navigation }) {
   const { selectedOptions, lat, long, json } = route.params;
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
   const [originalCardPos, setOriginalCardPos] = useState({ x: 0, y: 0 });

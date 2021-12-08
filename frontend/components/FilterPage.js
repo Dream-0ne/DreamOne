@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
 import { Chip } from "react-native-elements";
+import { LogBox } from 'react-native';
+
 import {
   Pressable,
   Box,
@@ -27,6 +29,8 @@ import { Entypo } from '@expo/vector-icons';
 
 
 export default function filterPage({ route, navigation }) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const { selectedOccasion, lat, long } = route.params;
   console.log("uhu: " +lat + " " + long);
   const [occasion, useOccasion] = useState(selectedOccasion);

@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
 import { DraxProvider,DraxScrollView, DraxView, DraxList, DraxSnapbackTargetPreset } from 'react-native-drax';
+import { LogBox } from 'react-native';
+
 import {
   NativeBaseProvider,
 
@@ -14,6 +16,8 @@ import {
 
 
 export default function DragNDropItem({name ,address,y,offset,setOffset,showDelete,picture ,distance ,tags}) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const [cardPos, setCardPos] = useState({ x: 0, y: y });
   const [dayTime,setDayTime] = useState("");
   //console.log(picture);
