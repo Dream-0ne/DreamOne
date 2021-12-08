@@ -27,7 +27,8 @@ import { Entypo } from '@expo/vector-icons';
 
 
 export default function filterPage({ route, navigation }) {
-  const { selectedOccasion } = route.params;
+  const { selectedOccasion, lat, long } = route.params;
+  console.log("uhu: " +lat + " " + long);
   const [occasion, useOccasion] = useState(selectedOccasion);
   const [filters, setFilters] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,16 +37,24 @@ export default function filterPage({ route, navigation }) {
   const [selecttedOptions, setSelectedOption] = useState([]);
   const [chips, setChips] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");
+  const [latitude, setLatitude] = useState(lat);
+  const [longitude, setLongitude] = useState(long);
+  const [searchFilter, setSearchFilter] = useState("");
+
   const theme = extendTheme({
     colors: {
       // Add new color
       primary: {
         50: '#FCE9DB',
+        55: '#C99789', 
+        60: "#fed7aa",
+        65: "FFE9DC"
       },
       // Redefinig only one shade, rest of the color will remain same.
       amber: {
         400: '#FCE9DB',
       },
+      
     },
     config: {
       // Changing initialColorMode to 'dark'
@@ -94,6 +103,7 @@ export default function filterPage({ route, navigation }) {
   function list() {
     let temp = [];
     let x = -40;
+    let index = 0;
     for (const [filter, options] of Object.entries(filters)) {
       let data = [];
       //console.log(JSON.stringify(selectedFilter[filter])); 
@@ -101,7 +111,7 @@ export default function filterPage({ route, navigation }) {
         data.push({ id: `${filter}.${index}`, name: item }); //id : Food.0 , name : Chinese
       })
       temp.push(
-        <View style={{ alignItems: "center", justifyContent: "center", paddingBottom: 10 }}>
+        <View key={index} style={{ alignItems: "center", justifyContent: "center", paddingBottom: 10 }}>
           <Pressable
             onPress={() => {
               setModalVisible(true);
@@ -124,13 +134,31 @@ export default function filterPage({ route, navigation }) {
 
         </View>
       );
+      index += 1;
     }
     return temp;
 
   };
 
-  function switchPage() {
-    navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions });
+
+async function apiCall(tempString){
+  setSearchFilter(tempString);
+  //console.log(searchFilter);
+  await fetch('https://ancient-island-59052.herokuapp.com/business/' + lat + "/" + long+ "/"+ searchFilter)
+    .then(response => response.json())
+    .then(data => {console.log(data)
+      navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude, json: data } );
+
+    });
+}
+  async function switchPage() {
+    let tempString = "";
+    selecttedOptions.forEach((item) => {
+      tempString = tempString + item + ":";
+    })
+    tempString = tempString.substr(0, tempString.length - 1);
+    apiCall(tempString)
+    // navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude });
   }
 
   function showOptions() {
@@ -141,7 +169,7 @@ export default function filterPage({ route, navigation }) {
       if (chips.indexOf(`${currentFilter}:${item.name}`) > -1) {
       } else {
         checkBox.push(
-          <Checkbox value={item.name} colorScheme="amber">
+          <Checkbox value={item.name} colorScheme="orange">
             {item.name}
           </Checkbox>
         );
@@ -178,14 +206,14 @@ export default function filterPage({ route, navigation }) {
         <View style={{ padding: 5, alignItems: "center" }}>
           <Pressable onPress={() => { removeChip(item) }}>
 
-            <Box p="3" rounded="100" width="170" bg="primary.500" shadow={7}
+            <Box p="3" rounded="100" width="170" bg="primary.50" shadow={7}
             >
               <View style={styles.chipBoxContainer}>
                 <Text style={{ top: 4, color: "black", paddingRight: 15 }}>
                   {/* style={{ textAlign: "center" }} */}
                   {itemName}
                 </Text>
-                <Entypo name="circle-with-cross" size={24} color="pink" />
+                <Entypo name="circle-with-cross" size={24} color="primary.65" />
               </View>
             </Box>
           </Pressable>
@@ -213,8 +241,8 @@ export default function filterPage({ route, navigation }) {
         </View>
         <View style={styles.chipBox}>
 
-          <Box p="5" rounded="8" bg="primary.50" width="300" >
-            <Text style={{ color: "grey", fontSize: 20, textDecorationLine: 'underline' }}>
+          <Box p="5" rounded="8"  bg="primary.55" width="300" >
+            <Text style={{ color: "#FCE9DB" , fontSize : 20, textAlign: "center"}}>
               Your chosen perferences:
             </Text>
 
@@ -238,18 +266,21 @@ export default function filterPage({ route, navigation }) {
                 <Button.Group space={2}>
                   <Button
                     variant="ghost"
-                    colorScheme="blueGray"
+                    color="primary.50"
                     onPress={() => {
                       setModalVisible(false)
                     }}
                   >
+                    <Text style= {{color: "primary.55"}}>
                     Cancel
+                    </Text>
+                   
                   </Button>
                   <Button
                     onPress={() => {
                       saveHelper()
                     }}
-                    colorScheme="amber"
+                    bg="primary.50"
                   >
                     Save
                   </Button>
@@ -259,15 +290,18 @@ export default function filterPage({ route, navigation }) {
           </Modal>
         </View>
 
-
-        <Button onPress={() => switchPage()}>
-          <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
-            <Text style={{ top: 4 }}>
-              select perferences
-            </Text>
-            <Entypo name="arrow-with-circle-right" size={24} color="black" style={{ left: 20, top: 0 }} />
-          </View>
-        </Button>
+        
+      <Button onPress = {()=> switchPage()}
+      bg = "primary.50">
+      
+        <View style= {{display : "flex",  flexDirection : "row" , justifyContent : "space-between"}}>
+        <Text style = {{top : 4, color: "primary.50"}}>
+          select preferences
+        </Text>
+        <Entypo name="arrow-with-circle-right" size={24} color="primary.50" style = {{left : 20, top: 0}}/>
+        </View>
+        
+      </Button>
       </ScrollView>
 
 

@@ -6,6 +6,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
 import { Picker } from '@react-native-picker/picker';
 import { Button } from 'react-native-elements';
+import GetLocation from 'react-native-get-location'
+import * as Location from "expo-location";
+
+
 import {
   Pressable,
   Box,
@@ -27,8 +31,26 @@ export default function OccasionPage({ navigation }) {
 
 
   const [occasions, updateOccasions] = useState([]);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   // Component did mount function that does api call
   useEffect(function effectFunction() {
+
+       (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location);
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
+    })();
+
+
+
     async function fetchOccasions() {
       const response = await fetch('https://ancient-island-59052.herokuapp.com/occasions');
       const json = await response.json();
@@ -36,23 +58,51 @@ export default function OccasionPage({ navigation }) {
     }
     fetchOccasions();
   }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //       return;
+  //     }
+
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //   })();
+  // }, []);
 
 
   //list component just to list occasions for now 
   const list = () => {
     return occasions.map((element) => {
       return (
-        <Picker.Item label={element} value={element} />
+        <Picker.Item label={element} key= {element} value={element} />
 
       );
     });
   };
   function switchPage() {
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+  })
+  .then(location => {
+      console.log(location);
+      // setLatitude(location.coords.latitude);
+      // setLongitude(location.coords.longitude);
+      
 
-    navigation.navigate('Filter', { selectedOccasion: selectedOccasion });
+  })
+  .catch(error => {
+      const { code, message } = error;
+      console.warn(code, message);
+  })
+    navigation.navigate('Filter', 
+      { selectedOccasion: selectedOccasion, lat : latitude, long: longitude });
 
   }
   function showPickerHelper() {
+    
     setPicker(true);
   }
   if (showPicker === true) {

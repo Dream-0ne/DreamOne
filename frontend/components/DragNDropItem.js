@@ -23,10 +23,15 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
 
       style={[styles.draggable,
       {
-        width: Dimensions.get('window').width / 2,
+        width: Dimensions.get('window').width / 2-10,
         height: 100,
         top: cardPos.y,
         left: cardPos.x,
+        backgroundColor: "papayawhip", 
+        borderColor: "peru", 
+        borderWidth: 1.5, 
+        marginBottom: 0.5,
+        marginLeft : -0.5, 
       }
       ]
       }
@@ -47,7 +52,7 @@ export default function DragNDropItem({name ,address,y,offset,setOffset,showDele
       dragPayload={{ setCardPos , name, address, picture, distance, tags,setDayTime, dayTime}}
       renderContent={() => {
         return (
-        <View>
+        <View style={{borderColor: "peru"}}>
           <Text>
             {name} 
           </Text>
@@ -70,8 +75,6 @@ const styles = StyleSheet.create({
  
  
   draggable: {
-    width: Dimensions.get('window').width / 2,
-    backgroundColor: 'gray',
     zIndex: 100,
     padding: 5,
   },

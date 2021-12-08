@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Dimensions, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderComponent from "./HeaderComponent";
@@ -8,16 +8,17 @@ import {
   NativeBaseProvider,
   ScrollView,
   Button,
+  Box,
+  Text,
 } from "native-base";
 //import { BoardRepository } from 'react-native-draganddrop-board';
 import DragNDropItem from './DragNDropItem';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { height } from 'dom-helpers';
-
-
+import { Feather } from '@expo/vector-icons';
 
 function DragNDrop({ route, navigation }) {
-  const { selectedOptions } = route.params;
+  const { selectedOptions, lat, long, json } = route.params;
+
 
   const [originalCardPos, setOriginalCardPos] = useState({ x: 0, y: 0 });
   const [business, setBusiness] = useState([]);
@@ -31,20 +32,10 @@ function DragNDrop({ route, navigation }) {
   const [nightPlanner, setNightPlanner] = useState({});
   const [searchFilter, setSearchFilter] = useState("");
 
-
   useEffect(
     function effectFunction() {
       async function fetchBusiness() {
-        let tempString = "";
-        filter.forEach((item)=>{
-          tempString = tempString + item + ":";
-          
-        })
-        tempString = tempString.substr(0,tempString.length-1);
-        setSearchFilter(tempString);
-        //console.log(searchFilter);
-        const response = await fetch('https://ancient-island-59052.herokuapp.com/business/' + searchFilter);
-        const json = await response.json();
+
 
         setBusiness(json);
 
@@ -76,7 +67,7 @@ function DragNDrop({ route, navigation }) {
       temp.push(
 
         <DragNDropItem name={item.name} address={item.address} y={y} offset={offset}
-          picture = {item.photo_ref} distance = {item.distance} tags = {item.tags}
+          picture={item.photo_ref} distance={item.distance} tags={item.tags}
           setOffset={(value) => setOffsetFunction(value)}
           showDelete={(bool) => showDeleteFunction(bool)} />
       )
@@ -100,19 +91,21 @@ function DragNDrop({ route, navigation }) {
 
   if (plannerShow === false) {
     return (
-      <View>
+      <NativeBaseProvider>
         <View style={{ top: -3 }}>
           <HeaderComponent text="Drag and Drop" />
         </View>
         <Text>
           There is no local business with "{searchFilter}" near you.
         </Text>
-      </View>)
+
+      </NativeBaseProvider>
+    )
 
   } else {
     return (
       <NativeBaseProvider>
-        <View style={{ padding: 0 }}>
+        <View style={{ padding: 0, color: "mistyrose" }}>
           <HeaderComponent text="Drag and Drop" />
         </View>
 
@@ -129,11 +122,26 @@ function DragNDrop({ route, navigation }) {
 
               {/* <DraxScrollView showsVerticalScrollIndicator= {true}> */}
               <SafeAreaView style={styles.draggableArea}>
+                <View style={{ padding: 4 }}>
+                  <Box
+                    shadow="2"
+                    rounded="lg"
+                    w={{ base: "20", md: "100", lg: "md" }}
+                    bg="warning.400"
+                    style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
+                  >
+                    <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
+                      {/* <Feather name="sunrise" size={20} color="white" /> */}
+                      BUSINESSES
+                    </Text>
+                    {listBusinesses()}
+                  </Box>
+                </View>
 
 
 
 
-                {listBusinesses()}
+
 
 
 
@@ -141,71 +149,130 @@ function DragNDrop({ route, navigation }) {
               </SafeAreaView>
               {/* </DraxScrollView> */}
 
-
-
-
-
-
               <View style={styles.receiverArea}>
-                <Text>
-                  Morning
-                </Text>
-                <DraxView
-                  style={styles.receiver}
-                  receivingStyle={styles.receiving}
-                  receptive={true}
+                <View style={{ padding: 4 }}>
+                  <Box
+                    shadow="2"
+                    rounded="lg"
+                    w={{ base: "20", md: "100", lg: "md" }}
+                    bg="warning.400"
+                    style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
+                  >
 
-                  onReceiveDragDrop={({ dragged: { payload } }) => {
+                    <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
+                      {/* <Feather name="sunrise" size={20} color="white" /> */}
+                      MORNING
+                    </Text>
+                    <DraxView
+                      style={styles.receiver}
+                      receivingStyle={styles.receiving}
+                      receptive={true}
+                      renderContent={() => {
+                        return (
+                          <View alignItems="center" style={{ top: 10 }}>
+                            <Feather name="sunrise" size={80} color="peachpuff" />
 
-                    payload?.setCardPos?.({ x: 207, y: 17 - offset * 100 });
-                    payload?.setDayTime?.("morning");
-                    setMorningPlanner({"name" : payload?.name , "address" : payload?.address,
-                                        "picture" : payload?.picture, "distance" : payload?.distance,
-                                         "tags" : payload?.tags });
+                          </View>)
+                      }}
+
+                      onReceiveDragDrop={({ dragged: { payload } }) => {
+
+                        payload?.setCardPos?.({ x: 196, y: 0 - offset * 100 });
+                        payload?.setDayTime?.("morning");
+                        setMorningPlanner({
+                          "name": payload?.name, "address": payload?.address,
+                          "picture": payload?.picture, "distance": payload?.distance,
+                          "tags": payload?.tags
+                        });
 
 
-                    return DraxSnapbackTargetPreset.None;
-                  }}
-                />
-                <Text>
-                  Afternoon
-                </Text>
-                <DraxView
-                  style={styles.receiver}
-                  receivingStyle={styles.receiving}
-                  receptive={true}
+                        return DraxSnapbackTargetPreset.None;
+                      }}
+                    />
 
-                  onReceiveDragDrop={({ dragged: { payload } }) => {
-                    payload?.setCardPos?.({ x: 207, y: 135 - offset * 100 });
-                    payload?.setDayTime?.("afternoon");
-                    setAfternoonPlanner({"name" : payload?.name , "address" : payload?.address,
-                    "picture" : payload?.picture, "distance" : payload?.distance,
-                     "tags" : payload?.tags });
+                  </Box>
+                </View>
 
 
-                    return DraxSnapbackTargetPreset.None;
-                  }}
-                />
-                <Text>
-                  Night
-                </Text>
-                <DraxView
-                  style={styles.receiver}
-                  receivingStyle={styles.receiving}
-                  receptive={true}
+                <View style={{ padding: 4 }}>
+                  <Box
+                    shadow="2"
+                    rounded="lg"
+                    w={{ base: "20", md: "100", lg: "md" }}
+                    bg="warning.400"
+                    style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
+                  >
+                    <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
+                      {/* <Feather name="sunset" size={20} color="white" /> */}
+                      AFTERNOON
+                    </Text>
+                    <DraxView
+                      style={styles.receiver}
+                      receivingStyle={styles.receiving}
+                      receptive={true}
+                      renderContent={() => {
+                        return (
+                          <View alignItems="center" style={{ top: 10 }}>
+                            <Feather name="sunset" size={80} color="peachpuff" />
 
-                  onReceiveDragDrop={({ dragged: { payload } }) => {
-                    payload?.setCardPos?.({ x: 207, y: 252 - offset * 100 });
-                    payload?.setDayTime?.("night");
-                    setNightPlanner({"name" : payload?.name , "address" : payload?.address,
-                    "picture" : payload?.picture, "distance" : payload?.distance,
-                     "tags" : payload?.tags });
+                          </View>)
+                      }}
 
-                    return DraxSnapbackTargetPreset.None;
-                  }}
-                />
+                      onReceiveDragDrop={({ dragged: { payload } }) => {
+                        payload?.setCardPos?.({ x: 196, y: 136 - offset * 100 });
+                        payload?.setDayTime?.("afternoon");
+                        setAfternoonPlanner({
+                          "name": payload?.name, "address": payload?.address,
+                          "picture": payload?.picture, "distance": payload?.distance,
+                          "tags": payload?.tags
+                        });
 
-                <Button onPress={() => { switchPage() }}>
+
+                        return DraxSnapbackTargetPreset.None;
+                      }}
+                    />
+                  </Box>
+                </View>
+                <View style={{ padding: 4 }}>
+                  <Box
+                    shadow="2"
+                    rounded="lg"
+                    w={{ base: "20", md: "100", lg: "md" }}
+                    bg="warning.400"
+                    style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
+                  >
+                    <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
+
+                      NIGHT
+                    </Text>
+                    <DraxView
+                      style={styles.receiver}
+                      receivingStyle={styles.receiving}
+                      receptive={true}
+                      renderContent={() => {
+                        return (
+                          <View alignItems="center" style={{ top: 10 }}>
+                            <Feather name="moon" size={80} color="peachpuff" />
+
+                          </View>)
+                      }}
+
+                      onReceiveDragDrop={({ dragged: { payload } }) => {
+                        payload?.setCardPos?.({ x: 196, y: 272 - offset * 100 });
+                        payload?.setDayTime?.("night");
+                        setNightPlanner({
+                          "name": payload?.name, "address": payload?.address,
+                          "picture": payload?.picture, "distance": payload?.distance,
+                          "tags": payload?.tags
+                        });
+
+                        return DraxSnapbackTargetPreset.None;
+                      }}
+                    />
+                  </Box>
+                </View>
+
+                <Button onPress={() => { switchPage() }} style={{ backgroundColor: "darksalmon" }}>
                   Checkout the planner
                 </Button>
 
@@ -222,14 +289,14 @@ function DragNDrop({ route, navigation }) {
               receivingStyle={styles.receiving}
               onReceiveDragDrop={({ dragged: { payload } }) => {
                 payload?.setCardPos?.({ x: originalCardPos.x, y: originalCardPos.y });
-                if (payload?.dayTime === "morning"){
+                if (payload?.dayTime === "morning") {
                   setMorningPlanner(null);
-                }else if (payload?.dayTime === "afternoon"){
+                } else if (payload?.dayTime === "afternoon") {
                   setAfternoonPlanner(null);
-                }else if (payload?.dayTime === "night"){
+                } else if (payload?.dayTime === "night") {
                   setNightPlanner(null);
                 }
-                
+
 
                 return DraxSnapbackTargetPreset.None;
               }}
@@ -246,14 +313,6 @@ function DragNDrop({ route, navigation }) {
 
 
         </DraxProvider>
-
-
-
-
-
-
-
-
       </NativeBaseProvider>
 
 
@@ -270,63 +329,49 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingTop: 0,
   },
-  alphaItem: {
-    backgroundColor: '#aaaaff',
-    borderRadius: 8,
-    margin: 4,
-    padding: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  alphaText: {
-    fontSize: 28,
-  },
   draggableArea: {
     width: Dimensions.get('window').width / 2,
     height: Dimensions.get('window').height - 200,
-    backgroundColor: 'white',
+
 
   },
   receiverArea: {
     width: Dimensions.get('window').width / 2,
     height: Dimensions.get('window').height - 200,
-    backgroundColor: 'white',
     zIndex: -1,
-
   },
   deleteArea: {
     width: Dimensions.get('window').width,
     height: 100,
-    backgroundColor: 'red',
+    backgroundColor: 'whitesmoke',
     zIndex: 0,
     top: -90,
   },
   draggable: {
     width: Dimensions.get('window').width / 2,
     height: 100,
-    backgroundColor: 'gray',
+    backgroundColor: 'peachpuff',
     zIndex: 5,
     padding: 5,
+    paddingLeft: 5,
   },
   receiver: {
-    width: Dimensions.get('window').width / 2,
+    width: Dimensions.get('window').width / 2 - 10,
     height: 100,
-    backgroundColor: 'green',
+    backgroundColor: 'linen',
     zIndex: 0,
   },
   deleteReceiver: {
     width: Dimensions.get('window').width,
     height: 100,
-    backgroundColor: 'red',
+    backgroundColor: 'whitesmoke',
     zIndex: 0,
-
-
   },
   dragging: {
     opacity: 0.2,
   },
   receiving: {
-    borderColor: '#ff00ff',
+    borderColor: 'black',
     borderWidth: 5,
   },
 
