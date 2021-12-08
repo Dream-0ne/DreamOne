@@ -8,6 +8,8 @@ import { Picker } from '@react-native-picker/picker';
 import { Button } from 'react-native-elements';
 import GetLocation from 'react-native-get-location'
 import * as Location from "expo-location";
+import { LogBox } from 'react-native';
+
 
 
 import {
@@ -26,6 +28,8 @@ import {
 
 
 export default function OccasionPage({ navigation }) {
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   const [selectedOccasion, setSelectedOccasion] = useState();
   const [showPicker, setPicker] = useState(false);
 
