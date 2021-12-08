@@ -317,7 +317,7 @@ export default function filterPage({ route, navigation }) {
           
           <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
             <Text style={{ top: 3, fontSize: 20}}>
-              SELECT PERFERENCES
+              SELECT PREFERENCES
             </Text>
             <Entypo name="arrow-with-circle-right" size={30}  style={{ left: 20, top:-4 }} />
           </View>
