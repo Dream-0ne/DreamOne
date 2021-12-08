@@ -46,11 +46,15 @@ export default function filterPage({ route, navigation }) {
       // Add new color
       primary: {
         50: '#FCE9DB',
+        55: '#C99789', 
+        60: "#fed7aa",
+        65: "FFE9DC"
       },
       // Redefinig only one shade, rest of the color will remain same.
       amber: {
         400: '#FCE9DB',
       },
+      
     },
     config: {
       // Changing initialColorMode to 'dark'
@@ -165,7 +169,7 @@ async function apiCall(tempString){
       if (chips.indexOf(`${currentFilter}:${item.name}`) > -1) {
       } else {
         checkBox.push(
-          <Checkbox value={item.name} colorScheme="amber">
+          <Checkbox value={item.name} colorScheme="orange">
             {item.name}
           </Checkbox>
         );
@@ -202,14 +206,14 @@ async function apiCall(tempString){
         <View style={{ padding: 5, alignItems: "center" }}>
           <Pressable onPress={() => { removeChip(item) }}>
 
-            <Box p="3" rounded="100" width="170" bg="primary.500" shadow={7}
+            <Box p="3" rounded="100" width="170" bg="primary.50" shadow={7}
             >
               <View style={styles.chipBoxContainer}>
                 <Text style={{ top: 4, color: "black", paddingRight: 15 }}>
                   {/* style={{ textAlign: "center" }} */}
                   {itemName}
                 </Text>
-                <Entypo name="circle-with-cross" size={24} color="pink" />
+                <Entypo name="circle-with-cross" size={24} color="primary.65" />
               </View>
             </Box>
           </Pressable>
@@ -237,8 +241,8 @@ async function apiCall(tempString){
         </View>
         <View style={styles.chipBox}>
 
-          <Box p="5" rounded="8" bg="primary.50" width="300" >
-            <Text style={{ color: "grey", fontSize: 20, textDecorationLine: 'underline' }}>
+          <Box p="5" rounded="8"  bg="primary.55" width="300" >
+            <Text style={{ color: "#FCE9DB" , fontSize : 20, textAlign: "center"}}>
               Your chosen perferences:
             </Text>
 
@@ -262,18 +266,21 @@ async function apiCall(tempString){
                 <Button.Group space={2}>
                   <Button
                     variant="ghost"
-                    colorScheme="blueGray"
+                    color="primary.50"
                     onPress={() => {
                       setModalVisible(false)
                     }}
                   >
+                    <Text style= {{color: "primary.55"}}>
                     Cancel
+                    </Text>
+                   
                   </Button>
                   <Button
                     onPress={() => {
                       saveHelper()
                     }}
-                    colorScheme="amber"
+                    bg="primary.50"
                   >
                     Save
                   </Button>
@@ -283,15 +290,18 @@ async function apiCall(tempString){
           </Modal>
         </View>
 
-
-        <Button onPress={() => switchPage()}>
-          <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
-            <Text style={{ top: 4 }}>
-              select perferences
-            </Text>
-            <Entypo name="arrow-with-circle-right" size={24} color="black" style={{ left: 20, top: 0 }} />
-          </View>
-        </Button>
+        
+      <Button onPress = {()=> switchPage()}
+      bg = "primary.50">
+      
+        <View style= {{display : "flex",  flexDirection : "row" , justifyContent : "space-between"}}>
+        <Text style = {{top : 4, color: "primary.50"}}>
+          select preferences
+        </Text>
+        <Entypo name="arrow-with-circle-right" size={24} color="primary.50" style = {{left : 20, top: 0}}/>
+        </View>
+        
+      </Button>
       </ScrollView>
 
 
