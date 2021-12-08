@@ -39,6 +39,8 @@ export default function filterPage({ route, navigation }) {
   const [currentFilter, setCurrentFilter] = useState("");
   const [latitude, setLatitude] = useState(lat);
   const [longitude, setLongitude] = useState(long);
+  const [searchFilter, setSearchFilter] = useState("");
+
   const theme = extendTheme({
     colors: {
       // Add new color
@@ -134,8 +136,25 @@ export default function filterPage({ route, navigation }) {
 
   };
 
-  function switchPage() {
-    navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude });
+
+async function apiCall(tempString){
+  setSearchFilter(tempString);
+  //console.log(searchFilter);
+  await fetch('https://ancient-island-59052.herokuapp.com/business/' + lat + "/" + long+ "/"+ searchFilter)
+    .then(response => response.json())
+    .then(data => {console.log(data)
+      navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude, json: data } );
+
+    });
+}
+  async function switchPage() {
+    let tempString = "";
+    selecttedOptions.forEach((item) => {
+      tempString = tempString + item + ":";
+    })
+    tempString = tempString.substr(0, tempString.length - 1);
+    apiCall(tempString)
+    // navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude });
   }
 
   function showOptions() {
