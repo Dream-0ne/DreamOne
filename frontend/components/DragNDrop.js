@@ -12,6 +12,7 @@ import {
   Button,
   Box,
   Text,
+  extendTheme,
 } from "native-base";
 //import { BoardRepository } from 'react-native-draganddrop-board';
 import DragNDropItem from './DragNDropItem';
@@ -19,9 +20,29 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 function DragNDrop({ route, navigation }) {
+  const theme = extendTheme({
+    colors: {
+      // Add new color
+      primary: {
+        50: '#FCE9DB',
+        55: '#C99789',
+        60: "#fed7aa",
+        65: "FFE9DC"
+      },
+      // Redefinig only one shade, rest of the color will remain same.
+      amber: {
+        400: '#FCE9DB',
+      },
+
+    },
+    config: {
+      // Changing initialColorMode to 'dark'
+      initialColorMode: 'light',
+    },
+  });
   const { selectedOptions, lat, long, json } = route.params;
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
+  LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
   const [originalCardPos, setOriginalCardPos] = useState({ x: 0, y: 0 });
@@ -108,7 +129,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
   } else {
     return (
-      <NativeBaseProvider>
+      <NativeBaseProvider theme={theme}>
         <View style={{ padding: 0, color: "mistyrose" }}>
           <HeaderComponent text="Drag and Drop" />
         </View>
@@ -131,7 +152,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
                     shadow="2"
                     rounded="lg"
                     w={{ base: "20", md: "100", lg: "md" }}
-                    bg="warning.400"
+                    bg="primary.55"
                     style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
                   >
                     <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
@@ -159,7 +180,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
                     shadow="2"
                     rounded="lg"
                     w={{ base: "20", md: "100", lg: "md" }}
-                    bg="warning.400"
+                    bg="primary.55"
                     style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
                   >
 
@@ -203,7 +224,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
                     shadow="2"
                     rounded="lg"
                     w={{ base: "20", md: "100", lg: "md" }}
-                    bg="warning.400"
+                    bg="primary.55"
                     style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
                   >
                     <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
@@ -242,7 +263,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
                     shadow="2"
                     rounded="lg"
                     w={{ base: "20", md: "100", lg: "md" }}
-                    bg="warning.400"
+                    bg="primary.55"
                     style={{ padding: 4, left: -4, width: Dimensions.get('window').width / 2 - 1 }}
                   >
                     <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
@@ -276,9 +297,11 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
                   </Box>
                 </View>
 
-                <Button onPress={() => { switchPage() }} style={{ backgroundColor: "darksalmon" }}>
-                  Checkout the planner
-                </Button>
+                <View style={{ paddingTop: 10 }}>
+                  <Button onPress={() => { switchPage() }} style={{ paddingTop: 10, backgroundColor: "#C99789" }}>
+                    Checkout Planner
+                  </Button>
+                </View>
 
               </View>
 
@@ -347,17 +370,9 @@ const styles = StyleSheet.create({
   deleteArea: {
     width: Dimensions.get('window').width,
     height: 100,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#ff6347',
     zIndex: 0,
     top: -90,
-  },
-  draggable: {
-    width: Dimensions.get('window').width / 2,
-    height: 100,
-    backgroundColor: 'peachpuff',
-    zIndex: 5,
-    padding: 5,
-    paddingLeft: 5,
   },
   receiver: {
     width: Dimensions.get('window').width / 2 - 10,
@@ -368,7 +383,7 @@ const styles = StyleSheet.create({
   deleteReceiver: {
     width: Dimensions.get('window').width,
     height: 100,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#ff6347',
     zIndex: 0,
   },
   dragging: {

@@ -16,11 +16,32 @@ import {
     Heading,
     ScrollView,
     Text,
+    extendTheme,
 
 } from "native-base"
 
 
 export default function DetailView({ navigation, route }) {
+    const theme = extendTheme({
+        colors: {
+          // Add new color
+          primary: {
+            50: '#FCE9DB',
+            55: '#C99789',
+            60: "#fed7aa",
+            65: "FFE9DC"
+          },
+          // Redefinig only one shade, rest of the color will remain same.
+          amber: {
+            400: '#FCE9DB',
+          },
+    
+        },
+        config: {
+          // Changing initialColorMode to 'dark'
+          initialColorMode: 'light',
+        },
+      });
     const { morning, afternoon, night } = route.params;
 
     const [showMorningPlanner, setShowMorningPlanner] = useState(morning.name !== undefined && morning.name !== null);
@@ -40,10 +61,10 @@ export default function DetailView({ navigation, route }) {
                             shadow="2"
                             rounded="lg"
                             w={{ base: "20", md: "100", lg: "md" }}
-                            bg="warning.400"
+                            bg="primary.50"
                             style={{ padding: 4 }}
                         >
-                            <Text fontWeight="medium" color="white" fontSize="sm" textAlign="center">
+                            <Text fontWeight="medium" color="grey" fontSize="sm" textAlign="center">
                                 {element}
                             </Text>
 
@@ -70,7 +91,7 @@ export default function DetailView({ navigation, route }) {
         )
     } else {
         return (
-            <NativeBaseProvider>
+            <NativeBaseProvider theme = {theme}>
 
                 <View style={{ padding: 0 }}>
                     <HeaderComponent text="Detail View" />
@@ -81,8 +102,8 @@ export default function DetailView({ navigation, route }) {
                             maxW="80"
                             rounded="lg"
                             overflow="hidden"
-                            borderColor="coolGray.200"
-                            borderWidth="1"
+                            borderColor="primary.55"
+                            borderWidth="10"
 
                             _dark={{
                                 borderColor: "coolGray.600",
@@ -163,8 +184,8 @@ export default function DetailView({ navigation, route }) {
                             maxW="80"
                             rounded="lg"
                             overflow="hidden"
-                            borderColor="coolGray.200"
-                            borderWidth="1"
+                            borderColor="primary.55"
+                            borderWidth="10"
 
                             _dark={{
                                 borderColor: "coolGray.600",
@@ -240,8 +261,8 @@ export default function DetailView({ navigation, route }) {
                             maxW="80"
                             rounded="lg"
                             overflow="hidden"
-                            borderColor="coolGray.200"
-                            borderWidth="1"
+                            borderColor="primary.55"
+                            borderWidth="10"
 
                             _dark={{
                                 borderColor: "coolGray.600",

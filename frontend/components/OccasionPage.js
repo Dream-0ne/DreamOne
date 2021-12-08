@@ -24,10 +24,31 @@ import {
   FormControl,
   Input,
   Checkbox,
+  extendTheme,
 } from "native-base"
 
 
 export default function OccasionPage({ navigation }) {
+  const theme = extendTheme({
+    colors: {
+      // Add new color
+      primary: {
+        50: '#FCE9DB',
+        55: '#C99789',
+        60: "#fed7aa",
+        65: "FFE9DC"
+      },
+      // Redefinig only one shade, rest of the color will remain same.
+      amber: {
+        400: '#FCE9DB',
+      },
+
+    },
+    config: {
+      // Changing initialColorMode to 'dark'
+      initialColorMode: 'light',
+    },
+  });
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const [selectedOccasion, setSelectedOccasion] = useState();
@@ -62,21 +83,7 @@ export default function OccasionPage({ navigation }) {
     }
     fetchOccasions();
   }, []);
-  // useEffect(() => {
-  //   (async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== 'granted') {
-  //       setErrorMsg('Permission to access location was denied');
-  //       return;
-  //     }
-
-  //     let location = await Location.getCurrentPositionAsync({});
-  //     setLocation(location);
-  //   })();
-  // }, []);
-
-
-  //list component just to list occasions for now 
+  
   const list = () => {
     return occasions.map((element) => {
       return (
@@ -92,9 +99,6 @@ export default function OccasionPage({ navigation }) {
   })
   .then(location => {
       console.log(location);
-      // setLatitude(location.coords.latitude);
-      // setLongitude(location.coords.longitude);
-      
 
   })
   .catch(error => {
@@ -111,31 +115,42 @@ export default function OccasionPage({ navigation }) {
   }
   if (showPicker === true) {
     return (
-      <NativeBaseProvider>
-        <View style={styles.container}>
+      <NativeBaseProvider theme = {theme}>
           <HeaderComponent text="Occasions" />
-
-          <Text style={{ fontSize: 18, paddingTop: 30, color: "grey" }}>Please choose an occasion to start your plan</Text>
-
-
-
+          <View style = {{alignItems :"center", alignContent : "center", top : 50}}>
+          <Box
+            shadow="2"
+            rounded="lg"
+            w={{ base: "20", md: "100", lg: "md" }}
+            bg="primary.55"
+            style={{ padding: 10, width: 360 }}
+          >
+          
+          <Text style={{ fontSize: 20, paddingTop: 10, paddingBottom : 10, color: "white" , textAlign : "center"}}>Please choose an occasion</Text>
+          <View style= {{alignItems : "center", alignContent : "center", paddingBottom : 20}}>
+          <Box  shadow="2" rounded="lg"style = {{ backgroundColor : "white", width : 250,}}>
           <Picker
             selectedValue={selectedOccasion}
             onValueChange={(itemValue, itemIndex) =>
               setSelectedOccasion(itemValue)}
             style={{
-              marginVertical: 10,
-              width: 200,
+              marginVertical: 20,
+              width: 250,
               top: -10,
             }}>
             {list()}
 
           </Picker>
+          </Box>
+          </View>
+          </Box>
+         
           <Button title="Select Occasion" containerStyle={styles.button}
-            buttonStyle={{ backgroundColor: "#C0988D", borderRadius: 100, top: -40 }} onPress={() => { switchPage() }} />
+            buttonStyle={{ backgroundColor: "#C0988D", borderRadius: 100, top: -20 }} onPress={() => { switchPage() }} />
           {/* onPress */}
 
         </View>
+       
       </NativeBaseProvider>
     );
   } else {
@@ -144,7 +159,7 @@ export default function OccasionPage({ navigation }) {
         <View style={styles.container}>
           <HeaderComponent text="Occasions" />
 
-          <Text style={{ fontSize: 18, paddingTop: 30, color: "grey" }}>Please choose an occasion to start your plan</Text>
+          <Text style={{ fontSize: 20, paddingTop: 30, color: "grey" }}>Choose an occasion to start your plan</Text>
 
           <Button title="Choose Your Occasion" containerStyle={styles.button}
             buttonStyle={{ backgroundColor: "#C0988D", borderRadius: 100, }} onPress={() => { showPickerHelper() }} />
@@ -159,11 +174,7 @@ export default function OccasionPage({ navigation }) {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    overflow: "hidden"
-  },
+  
   picker: {
     marginVertical: 10,
     width: 200,

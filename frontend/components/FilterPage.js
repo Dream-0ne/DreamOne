@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef, Component } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, View, SafeAreaView, Dimensions, ScrollView, StatusBar } from 'react-native';
 import HeaderComponent from "./HeaderComponent";
-import { Chip } from "react-native-elements";
 import { LogBox } from 'react-native';
 
 import {
@@ -20,6 +17,8 @@ import {
   Input,
   Checkbox,
   extendTheme,
+  Text,
+  
 } from "native-base";
 import { Entypo } from '@expo/vector-icons';
 
@@ -32,7 +31,7 @@ export default function filterPage({ route, navigation }) {
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
   LogBox.ignoreAllLogs();//Ignore all log notifications
   const { selectedOccasion, lat, long } = route.params;
-  console.log("uhu: " +lat + " " + long);
+  console.log("uhu: " + lat + " " + long);
   const [occasion, useOccasion] = useState(selectedOccasion);
   const [filters, setFilters] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,7 +49,7 @@ export default function filterPage({ route, navigation }) {
       // Add new color
       primary: {
         50: '#FCE9DB',
-        55: '#C99789', 
+        55: '#C99789',
         60: "#fed7aa",
         65: "FFE9DC"
       },
@@ -58,7 +57,7 @@ export default function filterPage({ route, navigation }) {
       amber: {
         400: '#FCE9DB',
       },
-      
+
     },
     config: {
       // Changing initialColorMode to 'dark'
@@ -145,16 +144,17 @@ export default function filterPage({ route, navigation }) {
   };
 
 
-async function apiCall(tempString){
-  setSearchFilter(tempString);
-  //console.log(searchFilter);
-  await fetch('https://ancient-island-59052.herokuapp.com/business/' + lat + "/" + long+ "/"+ searchFilter)
-    .then(response => response.json())
-    .then(data => {console.log(data)
-      navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions,lat:latitude,long:longitude, json: data } );
+  async function apiCall(tempString) {
+    setSearchFilter(tempString);
+    //console.log(searchFilter);
+    await fetch('https://ancient-island-59052.herokuapp.com/business/' + lat + "/" + long + "/" + searchFilter)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        navigation.navigate('Drag and Drop', { selectedOptions: selecttedOptions, lat: latitude, long: longitude, json: data });
 
-    });
-}
+      });
+  }
   async function switchPage() {
     let tempString = "";
     selecttedOptions.forEach((item) => {
@@ -213,7 +213,7 @@ async function apiCall(tempString){
             <Box p="3" rounded="100" width="170" bg="primary.50" shadow={7}
             >
               <View style={styles.chipBoxContainer}>
-                <Text style={{ top: 4, color: "black", paddingRight: 15 }}>
+                <Text style={{  color: "black", paddingRight: 15 }}>
                   {/* style={{ textAlign: "center" }} */}
                   {itemName}
                 </Text>
@@ -233,20 +233,31 @@ async function apiCall(tempString){
       <HeaderComponent text={occasion} />
 
       <ScrollView >
-        <View style={styles.instruction}>
-          <Text style={{ color: "grey", fontSize: 20, top: -30, right: -30 }}>
-            please specify your perferences from below
-          </Text>
 
-        </View>
 
-        <View style={{ top: 30 }}>
-          {list()}
+
+        <Box safeAreaTop>
+        <View style={{ top: 10, alignItems: "center" }}>
+          <Box
+            shadow="2"
+            rounded="lg"
+            w={{ base: "20", md: "100", lg: "md" }}
+            bg="primary.55"
+            style={{ padding: 4, width: 360 }}
+          >
+            <View style={styles.instruction}>
+              <Text style={{ color: "white", fontSize: 20, top: -30, right: -30 }}>
+                Specify your perferences from below
+              </Text>
+
+            </View>
+            {list()}
+          </Box>
         </View>
         <View style={styles.chipBox}>
 
-          <Box p="5" rounded="8"  bg="primary.55" width="300" >
-            <Text style={{ color: "#FCE9DB" , fontSize : 20, textAlign: "center"}}>
+          <Box p="5" rounded="8" bg="primary.55" width="360" >
+            <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>
               Your chosen perferences:
             </Text>
 
@@ -270,21 +281,23 @@ async function apiCall(tempString){
                 <Button.Group space={2}>
                   <Button
                     variant="ghost"
-                    color="primary.50"
+                    
                     onPress={() => {
                       setModalVisible(false)
                     }}
                   >
-                    <Text style= {{color: "primary.55"}}>
-                    Cancel
+                    <Text style={{ color: "primary.55" }}>
+                      Cancel
                     </Text>
-                   
+
                   </Button>
                   <Button
                     onPress={() => {
                       saveHelper()
                     }}
-                    bg="primary.50"
+                    backgroundColor = "#C99789"
+                    backcolor="primary.50"
+                    
                   >
                     Save
                   </Button>
@@ -293,19 +306,25 @@ async function apiCall(tempString){
             </Modal.Content>
           </Modal>
         </View>
+        </Box>
+        <HStack backgroundColor = "#C99789" height = "130" top = "10" alignItems="center" safeAreaBottom shadow={6}>
+        
+        <Button onPress={() => switchPage()}
+          height = "50"
+          backgroundColor = "#C99789"
+          width = {Dimensions.get('window').width}>
 
+          
+          <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={{ top: 3, fontSize: 20}}>
+              SELECT PERFERENCES
+            </Text>
+            <Entypo name="arrow-with-circle-right" size={30}  style={{ left: 20, top:-4 }} />
+          </View>
+
+        </Button>
+        </HStack>
         
-      <Button onPress = {()=> switchPage()}
-      bg = "primary.50">
-      
-        <View style= {{display : "flex",  flexDirection : "row" , justifyContent : "space-between"}}>
-        <Text style = {{top : 4, color: "primary.50"}}>
-          select preferences
-        </Text>
-        <Entypo name="arrow-with-circle-right" size={24} color="primary.50" style = {{left : 20, top: 0}}/>
-        </View>
-        
-      </Button>
       </ScrollView>
 
 
@@ -345,6 +364,7 @@ const styles = StyleSheet.create({
     left: -30,
     top: 40,
     alignItems: "center",
+    paddingBottom : 30,
   },
   chipBox: {
     alignItems: "center",
