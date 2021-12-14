@@ -1,7 +1,7 @@
 # DreamOne
 
 ## About:
-- Dream one is a team that worked alongside members of Capital One during Capstone to create a project.
+- Dream one is a team that worked alongside members of Capital One during Capstone to create a project that helps uplift local businesses during these stressing times.
 
 
 ## Project:
